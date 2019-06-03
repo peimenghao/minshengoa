@@ -26,22 +26,23 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
     private Logger logger = LoggerFactory.getLogger(this.getClass());   //打印日志
 
     /**
-     * 如果带有 token，则对 token 进行检查，否则直接不允许通过   （商城项目可以允许通过，管理系统则不允许进入）
+     * 如果带有 token，则对 token 进行检查，否则直接通过
      */
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws UnauthorizedException {
         System.out.println("判断请求的请求头是否带上Token");
-        if (isLoginAttempt(request, response)) {       //调用方法调用方法   判断请求的请求头是否带上Token
+        if (isLoginAttempt(request, response)) {
+            //如果存在，则进入 executeLogin 方法执行登入，检查 token 是否正确
             try {
-                executeLogin(request, response); //如果存在，则进入 executeLogin 方法执行登入，检查 token 是否正确
+                executeLogin(request, response);
                 return true;
             } catch (Exception e) {
                 //token 错误
                 responseError(response, e.getMessage());
             }
         }
-        //如果请求头不存在 Token，则可能是执行登陆操作或者是游客状态访问，无需检查 token，直接返回 false
-        return false;
+        //如果请求头不存在 Token，则可能是执行登陆操作或者是游客状态访问，无需检查 token，直接返回 true
+        return true;
     }
 
     /**
@@ -50,18 +51,18 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
      */
     @Override
     protected boolean isLoginAttempt(ServletRequest request, ServletResponse response) {
-        System.out.println("用户登入，获取用户头信息（token）");
+        System.out.println("用户登入");
         HttpServletRequest req = (HttpServletRequest) request;
         String token = req.getHeader("Token");
         return token != null;
     }
 
     /**
-     * 获取头信息跳转到  登陆权限判断操作
+     * 执行登陆操作
      */
     @Override
     protected boolean executeLogin(ServletRequest request, ServletResponse response) throws Exception {
-        System.out.println("执行登入操作把头信息交给reaml判断");
+        System.out.println("执行登入操作");
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         String token = httpServletRequest.getHeader("Token");
         JWTToken jwtToken = new JWTToken(token);

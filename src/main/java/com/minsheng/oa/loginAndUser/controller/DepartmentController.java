@@ -41,15 +41,4 @@ public class DepartmentController {
     }
 
 
-//    @Path("/registPage")  //跳转到注册页面   获得部门信息   只能获得set 集合值，非json格式
-//    @GET
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public Map<String, Object> loginPage(){
-//
-//        Set<Object> departments = departmentService.findDepartIdAndName();
-//
-//
-//        return resultMap.resutSuccessDate(departments);
-//    }
-
 }

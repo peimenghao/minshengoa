@@ -24,6 +24,11 @@ public class InterviewService {
         return  interviewDao.findAll();
     }
 
+    public void  saveInterview(Interview interview){
+        interviewDao.save(interview);
+
+    }
+
 
 
 

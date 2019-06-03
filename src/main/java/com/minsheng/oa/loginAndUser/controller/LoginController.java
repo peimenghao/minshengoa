@@ -1,6 +1,7 @@
 package com.minsheng.oa.loginAndUser.controller;
 
 
+import com.minsheng.oa.loginAndUser.model.Department;
 import com.minsheng.oa.loginAndUser.model.Role;
 import com.minsheng.oa.loginAndUser.model.User;
 import com.minsheng.oa.loginAndUser.service.DepartmentService;
@@ -49,10 +50,16 @@ public class LoginController {
         user.setCreateTime(DateUtils.getTimestamp().toString());
         user.getDepartment().setDepartId(departId);
 
+//        Role role=new Role();
+//        role.setRoleId(2);
+//        Set<Role> roles=new HashSet<Role>();
+//        roles.add(role);
+//        user.setRoleList(roles);
+
         userService.save(user);                 //保存到数据库
         User user1 = userService.findByUserName(user.getUserName());//获得杠保存到数据库的userid
         System.out.println(user1.getUserId());
-        userRoleService.save(2, user1.getUserId());  //保存usero role中间表
+        userRoleService.save(2, user1.getUserId());
         return resultMap.resutSuccess();
     }
 
@@ -79,26 +86,16 @@ public class LoginController {
     }
 
 
-
-    @Path("/reminder")   //未登陆跳转
+    @Path("/loginPage")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Map<String, Object> reminder() {
+    public Map<String, Object> loginPage() {             //查询所有用户
 
-        return resultMap.resutError("请先登陆哦");
+        List<Department> departments = departmentService.findAll();
+
+
+        return resultMap.resutSuccessDate(departments);
     }
-
-
-
-    @Path("/noPerm")   //未登陆跳转
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Map<String, Object> noPerm() {
-
-        return resultMap.resutError("权限不够");
-    }
-
-
 
 
     @Path("/getUsers")
@@ -112,7 +109,7 @@ public class LoginController {
         map.put("users", users);
         return map;
     }
-//阿三
+
     @Path("/getRole")
     @GET
     @Produces(MediaType.APPLICATION_JSON)

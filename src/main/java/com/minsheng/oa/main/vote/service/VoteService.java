@@ -1,6 +1,7 @@
 package com.minsheng.oa.main.vote.service;
 
 
+import com.minsheng.oa.main.vote.dao.OptionUserDao;
 import com.minsheng.oa.main.vote.dao.VoteOptionDao;
 import com.minsheng.oa.main.vote.dao.VoteThemeDao;
 import com.minsheng.oa.main.vote.model.VoteOption;
@@ -19,6 +20,9 @@ public class VoteService {
 
     @Autowired
     VoteOptionDao voteOptionDao;
+
+    @Autowired
+    OptionUserDao optionUserDao;
 
 
     public List<VoteTheme> findAllVote(){      //查询投票所有信息
@@ -40,6 +44,12 @@ public class VoteService {
     public void saveVoteOption(VoteOption voteOption){  //保存一个投票选项
 
         voteOptionDao.save(voteOption);
+    }
+
+
+    public void saveOptionUserId(Integer optionId,Integer userId ){  //保存option_user表
+
+        optionUserDao.saverOptionUserId(optionId,userId);
     }
 
 

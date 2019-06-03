@@ -48,6 +48,10 @@ public class VoteTheme{             //投票主题
     @FormParam(value="isSelectOne")
     private Integer isSelectOne;
 
+    @Column(name="overtime")       //超时，不允许投票  设置 1 不允许投票
+    @FormParam(value="overtime")
+    private Integer  overtime=0;
+
 
 //    @OneToMany(mappedBy = "option",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 //    //cascade=CascadeType.ALL:级联保存、更新、删除、刷新;延迟加载。当删除用户，会级联删除该用户的所有文章

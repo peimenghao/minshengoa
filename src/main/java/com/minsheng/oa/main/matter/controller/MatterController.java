@@ -24,7 +24,6 @@ public class MatterController {
     @GET
     @Produces("application/json")        //获得所有待办事项
     public Map<String,Object> getMatter(@QueryParam("userId") Integer userId){
-
         Map<String,Object> Map = matterService.findMatterByUserId(userId);
         return Map;
     }

@@ -5,9 +5,7 @@ import com.minsheng.oa.main.interview.service.InterviewService;
 import com.minsheng.oa.utils.resultMap.ResultMap;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import java.util.List;
 import java.util.Map;
 
@@ -32,4 +30,18 @@ public class Interviewcontroller {
         System.out.println(interview);
         return resultMap.resutSuccessDate(interview);
     }
+
+
+    @Path("/saveInterview")
+    @POST
+    @Produces("application/json")
+    public Map<String, Object> saveInterview(@BeanParam Interview interview) {
+
+        interviewService.saveInterview(interview);
+
+        return resultMap.resutSuccess("success");
+    }
+
+
+
 }

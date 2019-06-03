@@ -9,7 +9,7 @@ import java.io.IOException;
 @Configuration
 public class CorsConfig implements Filter {       //跨域请求配置
 
-//asssssssssssssssssss
+
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

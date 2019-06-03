@@ -34,7 +34,6 @@ public class VisitorController {
     }
 
     @RequiresRoles({"admin"})
-
     @Path("/deleteVisitor")
     @GET
     @Produces("application/json")
@@ -42,7 +41,4 @@ public class VisitorController {
          visitorService.deleteByVisitorId(visitorId);
         return resultMap.resutSuccess("success");
     }
-
-
-
 }
