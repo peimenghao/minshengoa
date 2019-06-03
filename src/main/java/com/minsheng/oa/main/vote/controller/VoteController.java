@@ -104,7 +104,6 @@ public class VoteController {
                                               @FormParam("optionId7") Integer optionId7,
                                               @FormParam("userId") Integer userId,
                                               @FormParam("themeId") Integer themeId) {
-
         /**
          *判断是否超时
          */

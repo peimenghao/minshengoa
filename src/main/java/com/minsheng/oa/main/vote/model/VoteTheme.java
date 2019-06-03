@@ -48,9 +48,11 @@ public class VoteTheme{             //投票主题
     @FormParam(value="isSelectOne")
     private Integer isSelectOne;
 
-    @Column(name="overtime")       //超时，不允许投票  设置 1 不允许投票
+    @Column(name="overtime")       //超时，0允许投票,  1 不允许投票
     @FormParam(value="overtime")
     private Integer  overtime=0;
+
+
 
 
 //    @OneToMany(mappedBy = "option",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
