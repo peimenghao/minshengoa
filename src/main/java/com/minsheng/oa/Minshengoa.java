@@ -7,8 +7,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Minshengoa {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(Minshengoa.class, args);
 	}
+
+
 
 	}
 

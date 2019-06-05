@@ -22,19 +22,21 @@ public class SchedulerMail{
 
     }
 
-    public void setTrigger(Map<String,String> date, Map<String,String> email) throws SchedulerException {
+    public void setTrigger(Map<String,String> dateMap, Map<String,String> emailMap) throws SchedulerException {
 
-        for(int i=0;i<date.size();i++) {
+        for(int i=0;i<dateMap.size();i++) {
 
             //"2019-06-04 10:10:00"  ,  String 日期格式
             //创建调度器
             Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
-            String cronTime = DateUtils.stringtoCron(date.get("date"+i));  //字符串转cron
+            System.out.println("第一次datetime 转化"+dateMap.get("date"+i));
+
+            String cronTime = DateUtils.stringtoCron(dateMap.get("date"+i));  //字符串转cron
             //触发器
             Trigger trigger = TriggerBuilder.newTrigger()
                     .withIdentity(i + "trigger", "group1")  //触发器名称和 触发器组  名
                     .startNow()//马上启动
-                    .usingJobData("email", email.get("toMail"+i))
+                    .usingJobData("email", emailMap.get("email"+i))
                     .withSchedule(CronScheduleBuilder.cronSchedule(cronTime))  //日历
                     //  .withSchedule(SimpleScheduleBuilder.simpleSchedule().repeatSecondlyForever(5))  // 重复重发间隔时间
                     // .startAt(startDate)

@@ -75,6 +75,7 @@ public class DateUtils {
      */
     public static Date stringToDate(String source, String pattern) {
         simpleDateFormat = new SimpleDateFormat(pattern);
+        System.out.println(source+"source");
         Date date = null;
         try {
             date = simpleDateFormat.parse(source);

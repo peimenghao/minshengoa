@@ -15,4 +15,6 @@ public interface MatterDao extends JpaRepository<Matter,Integer> {
 
 
      Matter  save(Matter matter);   //插入待办事项
+
+     List<Matter>  findAll();
 }
