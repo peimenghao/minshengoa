@@ -45,9 +45,15 @@ public class UserService {
         userDao.removeByUserId(id);
     }
 
-    public void updatePwdOrName(User user) {           //更新用户的  密码    ID
+    public void updatePwdOrName(User user) {           //更新用户的 姓名  密码    ID
 
         userDao.updatePwdOrName(user.getUserName(), user.getPassword(), user.getUserId());
+
+    }
+
+    public void updatePasswordById(User user) {           //更新用户的  密码
+
+        userDao.updatePasswordById( user.getPassword(), user.getUserId());
 
     }
 

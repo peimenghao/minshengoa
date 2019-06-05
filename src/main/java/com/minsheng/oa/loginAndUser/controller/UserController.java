@@ -46,6 +46,16 @@ public class UserController {
         return  resultMap.resutSuccess("更新成功");
     }
 
+    @Path("/updatePasswordById")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Map<String,Object> updatePasswordById(@BeanParam User user){             //更改用户和密码
+
+        userService.updatePasswordById(user);
+        return  resultMap.resutSuccess("更新成功");
+    }
+
+
     @Path("/updateUserData")
     @POST
     @Produces(MediaType.APPLICATION_JSON)

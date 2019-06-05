@@ -8,7 +8,7 @@ import org.quartz.impl.StdSchedulerFactory;
 import java.util.Map;
 
 
-public class SchedulerMail{
+public class SchedulerMail{                //quartz初始化
 
 
     public JobDetail setJobDetail(String jobName) {

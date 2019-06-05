@@ -45,8 +45,13 @@ public interface UserDao extends JpaRepository<User, Integer> {
     public void updatePwdOrName(String userName, String password, Integer userId);
 
     @Transactional
+    @Query(value = "update t_user set password=?1 where user_id=?2", nativeQuery = true)
+    @Modifying
+    public void updatePasswordById( String password, Integer userId);
+
+
+    @Transactional
     @Query(value = "update t_user set email=?1,birthday=?2,gender=?3,phone=?4,real_name=?5 ,user_name=?6 where user_id=?7", nativeQuery = true)
     @Modifying
     public void updateUserData( String email,String birthday,Integer gender,String phone,String realName,String username,Integer UserId);
-
 }

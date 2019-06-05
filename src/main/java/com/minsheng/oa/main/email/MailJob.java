@@ -38,8 +38,10 @@ public class MailJob implements Job {
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
         System.out.println(DateUtils.getTimestamp());
+
         JobDataMap triggerDataMap=context.getTrigger().getJobDataMap();  //trigger的 map传值对象
-        String  email=triggerDataMap.getString("email");  //根据key取出 value
+        String  email=triggerDataMap.getString("email");      //根据触发器设置的 key取出 value
+
         System.out.println(email);
         System.out.println("job启动");
 

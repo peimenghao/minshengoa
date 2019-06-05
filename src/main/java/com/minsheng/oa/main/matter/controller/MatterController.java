@@ -46,7 +46,4 @@ public class MatterController {
         List<Matter> map = matterService.findAllMatter();
         return resultMap.resutSuccessDate(map);
     }
-
-
-
 }
