@@ -18,7 +18,7 @@ import java.util.Map;
 @Path("/department")
 public class DepartmentController {
 
-
+   
     @Autowired
     UserService userService;
 
