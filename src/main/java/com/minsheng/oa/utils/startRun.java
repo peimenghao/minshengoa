@@ -14,10 +14,13 @@ public class startRun implements ApplicationRunner {
     //private static Logger logger = LoggerFactory.getLogger(StartService.class);
     @Autowired
     InitMatterMail initMatterMail;
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
 
         initMatterMail.sendMail();
     }
+
+
 }
 

@@ -18,7 +18,7 @@ import java.util.Map;
 @Path("/department")
 public class DepartmentController {
 
-   
+
     @Autowired
     UserService userService;
 
@@ -35,7 +35,7 @@ public class DepartmentController {
     @Path("/findDepartments")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Map<String, Object> findDepartments() {            //根据id 删除用户
+    public Map<String, Object> findDepartments() {            //查询所有的部门信息
         List<Department> departments = departmentService.findAll();
         return resultMap.resutSuccessDate(departments);
     }

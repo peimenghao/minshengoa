@@ -3,6 +3,7 @@ package com.minsheng.oa.utils;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -168,6 +169,56 @@ public class DateUtils {
         System.out.println(sb);
         String crondate1=sb.toString();
         return  crondate1;
+    }
+
+    //和当前时间作比较
+    public static int compareNowDate(String date) {
+
+        DateFormat df = new SimpleDateFormat(DATE_TO_STRING_DETAIAL_PATTERN);
+        try {
+            Date dt = df.parse(date);
+            Date nowTime = getTimestamp();
+            if (dt.getTime() > nowTime.getTime()) {
+                System.out.println("这个时间未过期");
+                return 1;
+            } else if (dt.getTime() < nowTime.getTime()) {
+                System.out.println("这个时间已过期");
+                return -1;
+            } else {
+                return 0;
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return 0;
+    }
+
+
+    //两个时间作比较
+    public static int compareDate(String DATE1, String DATE2) {
+
+        DateFormat df = new SimpleDateFormat(DATE_TO_STRING_DETAIAL_PATTERN);
+        try {
+            Date dt1 = df.parse(DATE1);
+            Date dt2 = df.parse(DATE2);
+            if (dt1.getTime() > dt2.getTime()) {
+                System.out.println("dt1是未来");
+                return 1;
+            } else if (dt1.getTime() < dt2.getTime()) {
+                System.out.println("dt2是未来");
+                return -1;
+            } else {
+                return 0;
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return 0;
+    }
+
+    public static void main(String[] args) {
+        String s=getTimestamp().toString();
+        System.out.println(getTimestamp().toString());
     }
 }
 

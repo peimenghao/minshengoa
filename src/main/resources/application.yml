@@ -30,11 +30,10 @@ spring:
       hibernate:
          ddl-auto: update
       show-sql: true
+      open-in-view: true
 server:
     port: 80
-##队列
-messages:
-  queue: mail_queue
+
 
 
 
