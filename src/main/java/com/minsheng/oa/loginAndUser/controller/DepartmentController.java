@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 import java.util.Map;
@@ -41,4 +42,11 @@ public class DepartmentController {
     }
 
 
+    @Path("/findDepartByDepartId")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Map<String, Object> findDepartmentByDepartId(@QueryParam("departId") Integer departId) {            //查询所有的部门信息
+        Department department = departmentService.findDepartmentByDepartId(departId);
+        return resultMap.resutSuccessDate(department);
+    }
 }

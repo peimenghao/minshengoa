@@ -1,5 +1,6 @@
 package com.minsheng.oa.loginAndUser.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -34,9 +35,9 @@ public class Department {
 
 
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    @JsonIgnoreProperties(value = {"department","roleList"})   //断掉后面数据
     //拥有mappedBy注解的实体类为关系  被  维护端
     //mappedBy="company"中的company是Employee中的company属性
     private List<User> users = new ArrayList<User>();
-
 
 }

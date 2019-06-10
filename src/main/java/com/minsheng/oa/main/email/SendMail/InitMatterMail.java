@@ -14,7 +14,8 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class InitMatterMail {         //  查询整合成map资源   调用Scheduler 启动多个线程
+public class InitMatterMail {         //  查询整合成map资源 ，传值 创建多个SchedulerMail 启动多个线程
+
     @Autowired
     MatterService matterService;
 
@@ -37,7 +38,7 @@ public class InitMatterMail {         //  查询整合成map资源   调用Sched
             mailMap.put("email"+i,userEmail);
             }
         }
-        SchedulerMail schedulerMail=new SchedulerMail();  // 创建线程
+        SchedulerMail schedulerMail=new SchedulerMail();    // 创建线程
         try {
 
             schedulerMail.setTrigger(dateMap,mailMap);

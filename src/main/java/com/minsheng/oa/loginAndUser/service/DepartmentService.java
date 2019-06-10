@@ -19,4 +19,12 @@ public class DepartmentService {
         List<Department> departments = departmentDao.find();
         return departments;
     }
+
+
+    public Department findDepartmentByDepartId(Integer departId){
+        Department department=  departmentDao.getDepartmentByDepartId(departId);
+        department.getUsers().toString();
+        return department;
+    }
+
 }

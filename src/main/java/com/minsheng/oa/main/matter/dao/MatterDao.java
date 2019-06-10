@@ -2,6 +2,7 @@ package com.minsheng.oa.main.matter.dao;
 
 import com.minsheng.oa.main.matter.model.Matter;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
@@ -17,4 +18,13 @@ public interface MatterDao extends JpaRepository<Matter,Integer> {
      Matter  save(Matter matter);   //插入待办事项
 
      List<Matter>  findAll();
+
+     @Modifying
+     @Query(value="update  t_matter set content=?1,remind_time?2,title=?3 where matter_id=4 ",nativeQuery = true)
+     void updateMatter(String content,String remindTime,String title,Integer matterId);
+
+//
+//
+//     // 普通分页
+//     Page<Matter> getPage(Integer num, Integer size);
 }

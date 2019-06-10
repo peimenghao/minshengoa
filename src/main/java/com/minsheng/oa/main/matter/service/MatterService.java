@@ -27,8 +27,6 @@ public class MatterService {
     ResultMap resultMap;
 
 
-
-
     public Map<String, Object> findMatterByUserId(Integer userId) {//根据userid数据库,查询此用户所有待办事项
         List<Matter> matters = matterDao.findMatterByUserId(userId);
         Map<String, Object> map = resultMap.resutSuccessDate(matters);
@@ -47,9 +45,21 @@ public class MatterService {
         return map;
     }
 
-    public List<Matter>  findAllMatter() {//根据userid数据库,查询此用户所有待办事项
+    public List<Matter> findAllMatter() {//根据userid数据库,查询此用户所有待办事项
         List<Matter> matterList = matterDao.findAll();
         System.out.println(matterList);
         return matterList;
     }
+
+    public void updateMatter(Matter matter) {//根据userid数据库,查询此用户所有待办事项
+         matterDao.updateMatter(matter.getContent(),matter.getRemindTime(),matter.getTitle(),matter.getMatterId());
+
+    }
+
+
+//    public List<Matter> findMatterPage(Integer num,Integer size) {//分页查询
+//        List<Matter> matterList = (List<Matter>) matterDao.getPage(num, size);
+//        return matterList;
+//    }
+
 }

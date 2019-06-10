@@ -11,4 +11,7 @@ public interface DepartmentDao extends JpaRepository<Department, Integer> {
 
     @Query(value = "select d.* from t_department d", nativeQuery = true)
     List<Department> find();
+
+//    @Transactional
+    Department getDepartmentByDepartId(Integer departId);
 }

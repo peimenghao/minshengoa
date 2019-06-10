@@ -65,7 +65,7 @@ public class User implements Serializable {
 
 
 
-    //  双向级联 防止 死循环, roleList为另一方的属性处，数据到此切断
+    //  双向级联 防止 死循环, users为另一方的属性处，数据到此切断
     @JsonIgnoreProperties(value = {"users"}) //
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, optional = false)//可选属性optional=false,表示company不能为空
     @JoinColumn(name = "depart_id")            //设置在关联字段(外键)

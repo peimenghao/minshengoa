@@ -16,7 +16,7 @@ public class startRun implements ApplicationRunner {
     InitMatterMail initMatterMail;
 
     @Override
-    public void run(ApplicationArguments args) throws Exception {
+    public void run(ApplicationArguments args) throws Exception {  //初始化待办事项
 
         initMatterMail.sendMail();
     }
