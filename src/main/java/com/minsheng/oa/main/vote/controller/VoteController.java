@@ -92,7 +92,7 @@ public class VoteController {
     }
 
 
-    @Path("/saveOptionUser")  //保存用户和选项id，返回此投票所有投票信息    //用户投票功能
+    @Path("/saveOptionUser") //用户投票接口    //保存用户和选项id，返回此投票所有投票信息
     @POST
     @Produces("application/json")
     public Map<String, Object> saveOptionUser(@FormParam("optionId1") Integer optionId1,
@@ -111,7 +111,6 @@ public class VoteController {
         if (voteTheme.getOvertime() == 1) {
             return resultMap.resutError("overtime");
         }
-
         /**
          *判断用户是否已经投票,   如果未投票保存投票信息并且返回总投票数
          */
@@ -123,14 +122,11 @@ public class VoteController {
                 if (user.getUserId() == userId) {            //获取用户id  判断是否相同，相同即是重复，返回错误操作
                     return resultMap.resutError("repeatVoting");
                 }
-
             }
-
             voteNum = userlist.size() + voteNum;
         }
         if (optionId1 != null) {
             voteService.saveOptionUserId(optionId1, userId);
-
         }
 
         if (optionId2 != null) {

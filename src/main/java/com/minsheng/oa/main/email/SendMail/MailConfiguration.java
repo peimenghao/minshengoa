@@ -13,8 +13,8 @@ public class MailConfiguration {   //手动实例化JavaMailSender
     public JavaMailSenderImpl JavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost("smtp.qq.com");
-        mailSender.setUsername("281458696@qq.com");
-        mailSender.setPassword("babrylfgijaqbjfg");
+        mailSender.setUsername("281458696@qq.com");   //发送邮件人
+        mailSender.setPassword("babrylfgijaqbjfg");  //  权限码
         return mailSender;
     }
 }

@@ -41,4 +41,8 @@ public class VisitorController {
          visitorService.deleteByVisitorId(visitorId);
         return resultMap.resutSuccess("success");
     }
+
+    public static void main(String[] args) {
+        System.out.printf("as撒阿三阿德是");
+    }
 }

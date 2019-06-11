@@ -29,12 +29,6 @@ public class MatterService {
     @Autowired
     ResultMap resultMap;
 
-
-
-
-
-
-
     public Map<String, Object> findMatterByUserId(Integer userId) {//根据userid数据库,查询此用户所有待办事项
         List<Matter> matters = matterDao.findMatterByUserId(userId);
         Map<String, Object> map = resultMap.resutSuccessDate(matters);
@@ -62,13 +56,15 @@ public class MatterService {
     }
 
     public void updateMatter(Matter matter) {
-         matterDao.updateMatter(matter.getContent(),matter.getRemindTime(),matter.getTitle(),matter.getMatterId());
-        String remindTime= matter.getRemindTime();
-        String cronTime = DateUtils.stringtoCron(remindTime);
+         matterDao.updateMatter(matter.getContent(),matter.getRemindTime(),matter.getTitle(),matter.getMatterId()); //保存matter
+        User user= userService.findUserByUserId(matter.getUserId());        //获得用户信息
+        String remindTime= matter.getRemindTime();                //获得提醒时间
+        String cronTime = DateUtils.stringtoCron(remindTime);       //转码提醒时间
+
         SchedulerMail schedulerMail=new SchedulerMail();
         schedulerMail.modifyJobTime(matter.getMatterId().toString(),"matterJob",
                 matter.getMatterId().toString(),
-                "matterTrigger",cronTime);
+                "matterTrigger",cronTime,user.getEmail());     //修改定时器时间，添加邮件信息
 
     }
 

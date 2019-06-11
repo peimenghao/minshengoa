@@ -1,13 +1,15 @@
 package com.minsheng.oa.main.email;
 
 
+import com.minsheng.oa.main.email.MailJob;
 import com.minsheng.oa.utils.DateUtils;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
-
+@Service
 public class SchedulerMail {                //quartz初始化
 
 
@@ -17,7 +19,7 @@ public class SchedulerMail {                //quartz初始化
         //任务实例
         JobDetail jobDetail = JobBuilder.newJob(MailJob.class)         //Mailojob 必须实现job的接口
                 .withIdentity(jobName, "matterJob")   //任务名和 任务组 名
-                .usingJobData("jobDateMessage", "job信息")  //传map 值
+               // .usingJobData("jobDateMessage", "job信息")  //传map 值
                 .storeDurably()
                 .build();
 
@@ -46,7 +48,7 @@ public class SchedulerMail {                //quartz初始化
     }
 
 
-    public JobDetail setJobDetail(String jobName) {
+    public JobDetail setJobDetail(String jobName) {      //全局任务
         //任务实例
         JobDetail jobDetail = JobBuilder.newJob(MailJob.class)         //Mailojob 必须实现job的接口
                 .withIdentity(jobName, "group1")   //任务名和 任务组 名
@@ -57,7 +59,7 @@ public class SchedulerMail {                //quartz初始化
 
     }
 
-    public void setTrigger(Map<String, String> dateMap, Map<String, String> emailMap) throws SchedulerException {
+    public void setTrigger(Map<String, String> dateMap, Map<String, String> emailMap) throws SchedulerException {   //局扫描触发器
 
         for (int i = 0; i < dateMap.size(); i++) {
 
@@ -101,7 +103,7 @@ public class SchedulerMail {                //quartz初始化
      */
     public  void modifyJobTime(String jobName, String jobGroupName,
                                      String triggerName, String triggerGroupName,
-                                     String cron) {
+                                     String cron,String email) {
         try {
             Scheduler sched = schedulerFactory.getScheduler();
             TriggerKey triggerKey = TriggerKey.triggerKey(triggerName, triggerGroupName);
@@ -119,6 +121,7 @@ public class SchedulerMail {                //quartz初始化
                 triggerBuilder.startNow();
                 // 触发器时间设定
                 triggerBuilder.withSchedule(CronScheduleBuilder.cronSchedule(cron));
+                triggerBuilder.usingJobData("email",email);
                 // 创建Trigger对象,调用 rescheduleJob 结束
                 trigger = (CronTrigger) triggerBuilder.build();
                 // 方式一 ：修改一个任务的触发时间
@@ -130,7 +133,7 @@ public class SchedulerMail {                //quartz初始化
                 //Class<? extends Job> jobClass = jobDetail.getJobClass();
                 //removeJob(jobName, jobGroupName, triggerName, triggerGroupName);
                 //addJob(jobName, jobGroupName, triggerName, triggerGroupName, jobClass, cron);
-                /** 方式二 ：先删除，然后在创建一个新的Job */
+
             }
         } catch (Exception e) {
             throw new RuntimeException(e);

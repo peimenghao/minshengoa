@@ -18,7 +18,6 @@ public class MailJob implements Job {
     @Autowired
     SendMail sendMail = new SendMail();
 
-
     MailConfiguration mailConfiguration = new MailConfiguration();
 
     private String jobDateMessage;

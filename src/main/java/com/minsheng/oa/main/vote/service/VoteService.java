@@ -6,6 +6,8 @@ import com.minsheng.oa.main.vote.dao.VoteOptionDao;
 import com.minsheng.oa.main.vote.dao.VoteThemeDao;
 import com.minsheng.oa.main.vote.model.VoteOption;
 import com.minsheng.oa.main.vote.model.VoteTheme;
+import com.minsheng.oa.main.vote.voteQuartz.VoteScheduler;
+import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +18,7 @@ import java.util.List;
 public class VoteService {
 
     @Autowired
-    VoteThemeDao VoteThemeDao;
+    VoteThemeDao voteThemeDao;
 
     @Autowired
     VoteOptionDao voteOptionDao;
@@ -25,57 +27,44 @@ public class VoteService {
     OptionUserDao optionUserDao;
 
 
-    public List<VoteTheme> findAllVote(){      //查询投票所有信息
+    public List<VoteTheme> findAllVote() {      //查询投票所有信息
 
-        return  VoteThemeDao.findAllVote();
+        return voteThemeDao.findAllVote();
     }
 
-    public VoteTheme findVoteThemeByThemeId(Integer themeId){   //根据投票主题id 查询该投票的 下面所有信息
-        return  VoteThemeDao.findVoteThemeByThemeId(themeId);
+    public VoteTheme findVoteThemeByThemeId(Integer themeId) {   //根据投票主题id 查询该投票的 下面所有信息
+        return voteThemeDao.findVoteThemeByThemeId(themeId);
     }
 
-    public Integer saveVoteTheme(VoteTheme voteTheme){     //保存一个投票主题
+    public Integer saveVoteTheme(VoteTheme voteTheme) {     //保存一个投票主题
+        VoteTheme vt = voteThemeDao.save(voteTheme);
+        Integer themeId = vt.getThemeId();
+        VoteScheduler voteScheduler = new VoteScheduler();
+        try {
+            voteScheduler.addVoteTrigger(themeId,vt.getEndTime());  //启动定时线程。到结束时间修改投票状态；
+        } catch (SchedulerException e) {
+            e.printStackTrace();
+        }
 
-        VoteTheme  vt=VoteThemeDao.save(voteTheme);
-        return  vt.getThemeId();
+        return themeId;
 
     }
 
-    public void saveVoteOption(VoteOption voteOption){  //保存一个投票选项
+    public void saveVoteOption(VoteOption voteOption) {  //保存一个投票选项
 
         voteOptionDao.save(voteOption);
     }
 
 
-    public void saveOptionUserId(Integer optionId,Integer userId ){  //保存option_user表
+    public void saveOptionUserId(Integer optionId, Integer userId) {  //保存option_user表
+        System.out.println("optionId+userId--------" + optionId + userId);
+        optionUserDao.saverOptionUserId(optionId, userId);
 
-        optionUserDao.saverOptionUserId(optionId,userId);
     }
 
-
-
-
-
-//    public Integer newsCount(){
-//
-//        return newsDao.newsCount();
-//    }
-
-
-//    public Map<String,Object> findNews(Integer pageNo){
-//        Integer tatolcount = newsDao.newsCount();
-//        Page page = new Page();
-//        page.setTotalCount(tatolcount);
-//        page.setPageNo(pageNo);   //页码
-//        Integer startNum = page.getStartNum(); //起始行号
-//        List<News>  news = newsDao.findNews(startNum, 5);
-//
-//        Integer   totalPage= page.getTotalPage();
-//        Map<String,Object> map = new HashMap<String,Object>();
-//        map.put("map",news);
-//        map.put("totalPage",totalPage);
-//        return map;
-//    }
-
+    public void updateThemeStatus(Integer themeId){    //更新投票主题状态，设置过期
+        System.out.println(voteThemeDao);
+        voteThemeDao.updateThemeStatus(themeId);
+    }
 
 }
