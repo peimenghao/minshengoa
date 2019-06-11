@@ -4,6 +4,7 @@ import com.minsheng.oa.main.matter.model.Matter;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,7 +21,8 @@ public interface MatterDao extends JpaRepository<Matter,Integer> {
      List<Matter>  findAll();
 
      @Modifying
-     @Query(value="update  t_matter set content=?1,remind_time?2,title=?3 where matter_id=4 ",nativeQuery = true)
+     @Transactional
+     @Query(value="update  t_matter set content=?1,remind_time=?2,title=?3 where matter_id=?4",nativeQuery = true)
      void updateMatter(String content,String remindTime,String title,Integer matterId);
 
 //

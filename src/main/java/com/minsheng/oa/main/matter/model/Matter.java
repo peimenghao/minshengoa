@@ -19,6 +19,7 @@ public class Matter {  //待办事项
     @Id
     @Column(name = "matter_id", length = 50, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @FormParam(value="matterId")
     private Integer matterId;
 
     @Column(name = "content")           //内容
@@ -43,12 +44,9 @@ public class Matter {  //待办事项
 
     @Column(name = "is_over")             // 是否超时，0 是未超时，1是超时
     @FormParam(value="isOver")
-    private Integer isOver;
+    private Integer isOver=0;
 
 
-//    @ManyToOne(fetch = FetchType.EAGER)     //单项多对一
-//    @JoinColumn(name = "TN_TYPE_CODE")      // 设置外键字段，注意：！！要把上面外键（文章类别）字段注释  不然报错
-//    private InfoType infoType;
 
 
 }

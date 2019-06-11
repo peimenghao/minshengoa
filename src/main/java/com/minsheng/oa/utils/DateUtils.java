@@ -74,12 +74,12 @@ public class DateUtils {
     /**
      * 字符串转换为对应日期(可能会报错异常)
      */
-    public static Date stringToDate(String source, String pattern) {
+    public static Date stringToDate(String time, String pattern) {
         simpleDateFormat = new SimpleDateFormat(pattern);
-        System.out.println(source+"source");
+        System.out.println("字符串转日期"+time);
         Date date = null;
         try {
-            date = simpleDateFormat.parse(source);
+            date = simpleDateFormat.parse(time);
         } catch (ParseException e) {
             log.error("字符串转换日期异常", e);
         }
@@ -162,7 +162,8 @@ public class DateUtils {
 
     //字符串转cron
     public static String  stringtoCron(String  strCron){
-        Date date = stringToDate(strCron, "yyyy-MM-dd HH:mm:ss"); //字符串转化为日期
+        System.out.println("时间字符串"+strCron);
+        Date date = stringToDate(strCron, "yyyy-MM-dd HH:mm:ss"); //字符串转化为指定格式日期
         String crondate = getCron(date);      //日期获得cron 字符串
         StringBuffer  sb=new StringBuffer(crondate);  //cron 字符串转化为Stringbuffer 数组
         sb.append("-2020");
