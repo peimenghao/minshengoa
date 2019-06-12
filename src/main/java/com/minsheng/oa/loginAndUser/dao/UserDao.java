@@ -36,6 +36,10 @@ public interface UserDao extends JpaRepository<User, Integer> {
     @Query(value="select u.password from t_user u  where u.user_name=?1",nativeQuery = true)
     String findPwsByName(String userName);
 
+
+    @Query(value="select u.* from t_user u  where u.user_name like  %?1%",nativeQuery = true)
+    List<User>  findUserbyLikeName(String userName);
+
     @Transactional
     void removeByUserId(Integer id);
 

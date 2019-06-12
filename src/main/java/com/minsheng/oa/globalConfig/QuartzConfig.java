@@ -1,17 +1,15 @@
 package com.minsheng.oa.globalConfig;
 
 import org.quartz.Scheduler;
-import org.quartz.spi.TriggerFiredBundle;
-import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.quartz.AdaptableJobFactory;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
-import org.springframework.stereotype.Component;
 
 @Configuration
 public class QuartzConfig {
 
+    @Autowired
     private JobFactory jobFactory;
 
     public QuartzConfig(JobFactory jobFactory){
@@ -29,11 +27,15 @@ public class QuartzConfig {
         SchedulerFactoryBean factory = new SchedulerFactoryBean();
         // 设置自定义Job Factory，用于Spring管理Job bean
         factory.setJobFactory(jobFactory);
+
+        System.out.println("初始化schedulerFactoryBean");
         return factory;
     }
 
     @Bean(name = "scheduler")
     public Scheduler scheduler() {
+        System.out.println("返回scheduler");
         return schedulerFactoryBean().getScheduler();
     }
-}
+
+    }

@@ -7,8 +7,6 @@ import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.stereotype.Component;
 
 
@@ -21,7 +19,7 @@ public class VoteJob implements Job {
     private String triggerMessage;
 
     @Autowired
-    private VoteService voteService;
+     VoteService voteService;
 
     public void setTriggerMessage(String triggerMessage) {
         this.triggerMessage = triggerMessage;

@@ -62,9 +62,10 @@ public class MatterService {
         String cronTime = DateUtils.stringtoCron(remindTime);       //转码提醒时间
 
         SchedulerMail schedulerMail=new SchedulerMail();
+        System.out.println("id"+matter.getMatterId().toString()+"email"+user.getEmail()+"");
         schedulerMail.modifyJobTime(matter.getMatterId().toString(),"matterJob",
-                matter.getMatterId().toString(),
-                "matterTrigger",cronTime,user.getEmail());     //修改定时器时间，添加邮件信息
+                matter.getMatterId().toString(), "matterTrigger",
+                cronTime,user.getEmail());     //修改定时器时间，添加邮件信息
 
     }
 

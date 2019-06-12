@@ -82,6 +82,15 @@ public class UserController {
         return  resultMap.resutSuccessDate(user);
     }
 
+
+    @Path("/getUserbyLikeName")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Map<String,Object> getUserbyLikeName(@QueryParam("likeName") String  likeName){             //查询所有用户
+        List<User> userList =userService.findUserbyLikeName(likeName);
+        return  resultMap.resutSuccessDate(userList);
+    }
+
     @Path("/getUsersByDepartId")
     @GET
     @Produces(MediaType.APPLICATION_JSON)

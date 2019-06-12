@@ -63,15 +63,20 @@ public class UserService {
 
     }
 
-    public String findPwsByName(String userName) {   //根据用户名查询密码
+    public String findPwsByName(String userName) {     //根据用户名查询密码
 
         return userDao.findPwsByName(userName);
     }
 
-    public User findUserByUserId(Integer userId) {   //根据用户名id 查询用户
+    public User findUserByUserId(Integer userId) {     //根据用户名id 查询用户
       User user=  userDao.findUserByUserId(userId);
 
         return user;
+    }
+
+    public  List<User> findUserbyLikeName(String likeName) {   //  模糊查询用户
+        List<User> userList=  userDao.findUserbyLikeName(likeName);
+        return userList;
     }
 
     public List<User> findUserByDepartId(Integer departId) {   //根据用户名id 查询用户
