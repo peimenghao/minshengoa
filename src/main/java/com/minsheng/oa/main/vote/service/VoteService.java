@@ -26,6 +26,9 @@ public class VoteService {
     @Autowired
     OptionUserDao optionUserDao;
 
+    @Autowired
+    VoteScheduler voteScheduler;
+
 
     public List<VoteTheme> findAllVote() {      //查询投票所有信息
 
@@ -37,14 +40,10 @@ public class VoteService {
     }
 
     public Integer saveVoteTheme(VoteTheme voteTheme) {     //保存一个投票主题
-        VoteTheme vt = voteThemeDao.save(voteTheme);
+        VoteTheme vt = voteThemeDao.save(voteTheme);     //保存到数据库 并返回实体数据；
         Integer themeId = vt.getThemeId();
-        VoteScheduler voteScheduler = new VoteScheduler();
-        try {
             voteScheduler.addVoteTrigger(themeId,vt.getEndTime());  //启动定时线程。到结束时间修改投票状态；
-        } catch (SchedulerException e) {
-            e.printStackTrace();
-        }
+
 
         return themeId;
 
@@ -63,7 +62,7 @@ public class VoteService {
     }
 
     public void updateThemeStatus(Integer themeId){    //更新投票主题状态，设置过期
-        System.out.println(voteThemeDao);
+        System.out.println("voteThemeDao"+voteThemeDao);
         voteThemeDao.updateThemeStatus(themeId);
     }
 

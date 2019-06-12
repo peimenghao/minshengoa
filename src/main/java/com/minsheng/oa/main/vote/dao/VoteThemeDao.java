@@ -2,6 +2,7 @@ package com.minsheng.oa.main.vote.dao;
 
 import com.minsheng.oa.main.vote.model.VoteTheme;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,7 @@ public interface VoteThemeDao  extends JpaRepository<VoteTheme, Integer> {
     VoteTheme  save(VoteTheme voteTheme);
 
     @Transactional
+    @Modifying
     @Query(value="UPDATE t_vote_theme SET overtime=1 where theme_id=?1", nativeQuery = true)  //更新投票主题状态，设置过期
     void updateThemeStatus(Integer themeId);
 

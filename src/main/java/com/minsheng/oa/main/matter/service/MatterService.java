@@ -11,12 +11,12 @@ import com.minsheng.oa.utils.resultMap.ResultMap;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
-@Slf4j
 @Service
 public class MatterService {
 
@@ -29,6 +29,9 @@ public class MatterService {
     @Autowired
     ResultMap resultMap;
 
+    @Autowired
+    SchedulerMail schedulerMail;
+
     public Map<String, Object> findMatterByUserId(Integer userId) {//根据userid数据库,查询此用户所有待办事项
         List<Matter> matters = matterDao.findMatterByUserId(userId);
         Map<String, Object> map = resultMap.resutSuccessDate(matters);
@@ -39,7 +42,6 @@ public class MatterService {
         matter.setIsOver(0);
         matter.setCreateTime(DateUtils.getTimestamp().toString());
         matterDao.save(matter);                         //保存待办事项到数据库
-        SchedulerMail schedulerMail =new SchedulerMail();
         User user =  userService.findUserByUserId(matter.getUserId());
         try {
             schedulerMail.setSaveMaterTrigger(matter.getMatterId(),matter.getRemindTime(),user.getEmail());
@@ -59,10 +61,10 @@ public class MatterService {
          matterDao.updateMatter(matter.getContent(),matter.getRemindTime(),matter.getTitle(),matter.getMatterId()); //保存matter
         User user= userService.findUserByUserId(matter.getUserId());        //获得用户信息
         String remindTime= matter.getRemindTime();                //获得提醒时间
-        String cronTime = DateUtils.stringtoCron(remindTime);       //转码提醒时间
+        String cronTime = DateUtils.stringtoCron(remindTime);       //cron提醒时间
 
-        SchedulerMail schedulerMail=new SchedulerMail();
-        System.out.println("id"+matter.getMatterId().toString()+"email"+user.getEmail()+"");
+        System.out.println("matterId"+matter.getMatterId().toString()+"----email"+user.getEmail()+"");
+        //启动触发器
         schedulerMail.modifyJobTime(matter.getMatterId().toString(),"matterJob",
                 matter.getMatterId().toString(), "matterTrigger",
                 cronTime,user.getEmail());     //修改定时器时间，添加邮件信息

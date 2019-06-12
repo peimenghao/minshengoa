@@ -14,21 +14,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class VoteJob implements Job {
 
-    private String jobDateMessage;
-
-    private String triggerMessage;
-
     @Autowired
      VoteService voteService;
-
-    public void setTriggerMessage(String triggerMessage) {
-        this.triggerMessage = triggerMessage;
-    }
-
-
-    public void setJobDateMessage(String jobDateMessage) {
-        this.jobDateMessage = jobDateMessage;
-    }
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
@@ -36,7 +23,7 @@ public class VoteJob implements Job {
         JobDataMap triggerDataMap = context.getTrigger().getJobDataMap();  //trigger的 map传值对象
         Object themeId = triggerDataMap.get("themeId");    //根据触发器设置的 key取出 value
         System.out.println("job-----------id" + themeId);
-        System.out.println(voteService);
+        System.out.println("注入voteService 是否为空"+voteService);
         voteService.updateThemeStatus((Integer) themeId);
     }
 }

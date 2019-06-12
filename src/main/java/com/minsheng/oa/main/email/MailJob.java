@@ -10,29 +10,18 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
-@Configuration
+@Component
 public class MailJob implements Job {
 
 
     @Autowired
-    SendMail sendMail = new SendMail();
+    SendMail sendMail ;
 
-    MailConfiguration mailConfiguration = new MailConfiguration();
+    @Autowired
+    MailConfiguration mailConfiguration;
 
-    private String jobDateMessage;
-
-    private String triggerMessage;
-
-
-    public void setTriggerMessage(String triggerMessage) {
-        this.triggerMessage = triggerMessage;
-    }
-
-
-    public void setJobDateMessage(String jobDateMessage) {
-        this.jobDateMessage = jobDateMessage;
-    }
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
@@ -48,14 +37,7 @@ public class MailJob implements Job {
         sendMail.sendMail(email);  //发送邮件
 
 
-//        JobDataMap jobDataMap=context.getJobDetail().getJobDataMap();  //job  的  map传值对象
-//        String  jobDateMessage=jobDataMap.getString("message");  //根据key取出 value
-//        System.out.println(jobDateMessage);
-//
 
-//        System.out.println(triggerMessage);
-
-//
 
 
 

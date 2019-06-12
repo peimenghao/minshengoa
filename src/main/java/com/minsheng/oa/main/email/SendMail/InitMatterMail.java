@@ -21,6 +21,7 @@ public class InitMatterMail {         //  查询整合成map资源 ，传值 创
 
     @Autowired
     UserService userService;
+
     public void sendMail() {
         int no=0;         //map 键值对命名序号，
         System.out.println(matterService);

@@ -52,11 +52,18 @@ public class MatterController {
         return resultMap.resutSuccessDate(map);
     }
 
+
+    /**
+     *  //更新指定待办事项   一次服务器启动期间为启动过的job，修改时间也会触发job。
+     *  不在一次服务器调动期间的job，不会触发job
+     *  *此处需要写逻辑 判断是否为过期Matter   （设字段 或者判断时间）
+     * @param matter
+     * @return
+     */
     @Path("/updateMatter")
     @POST
-    @Produces("application/json")         //更新指定待办事项
+    @Produces("application/json")
     public Map<String,Object> updateMatter(@BeanParam Matter matter){ //后台判断时间： 提醒时间必须比当前时间大
-        System.out.println(matter.getMatterId());
         matterService.updateMatter(matter);
         return resultMap.resutSuccess();
     }

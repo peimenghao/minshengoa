@@ -7,35 +7,22 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
 @Configuration
-public class QuartzConfig {
+public class QuartzConfig {           //job 交给spring注入
 
     @Autowired
     private JobFactory jobFactory;
 
-    public QuartzConfig(JobFactory jobFactory){
-        this.jobFactory = jobFactory;
-    }
-
-    /**
-     * 配置SchedulerFactoryBean
-     *
-     * 将一个方法产生为Bean并交给Spring容器管理
-     */
     @Bean
-    public SchedulerFactoryBean schedulerFactoryBean() {
-        // Spring提供SchedulerFactoryBean为Scheduler提供配置信息,并被Spring容器管理其生命周期
-        SchedulerFactoryBean factory = new SchedulerFactoryBean();
-        // 设置自定义Job Factory，用于Spring管理Job bean
-        factory.setJobFactory(jobFactory);
+    public SchedulerFactoryBean schedulerFactoryBean(){
+        SchedulerFactoryBean schedulerFactoryBean = new SchedulerFactoryBean();
+        schedulerFactoryBean.setJobFactory(jobFactory);//将job实例化，能够操作进行Spring 注入
 
-        System.out.println("初始化schedulerFactoryBean");
-        return factory;
+        return schedulerFactoryBean;
     }
 
-    @Bean(name = "scheduler")
+    @Bean
     public Scheduler scheduler() {
-        System.out.println("返回scheduler");
         return schedulerFactoryBean().getScheduler();
     }
 
-    }
+}

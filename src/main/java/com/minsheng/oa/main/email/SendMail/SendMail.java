@@ -1,12 +1,13 @@
 package com.minsheng.oa.main.email.SendMail;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SendMail {
-
-    MailConfiguration mailConfiguration = new MailConfiguration();
+      @Autowired
+    MailConfiguration mailConfiguration ;
 
     public void sendMail(String to) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();

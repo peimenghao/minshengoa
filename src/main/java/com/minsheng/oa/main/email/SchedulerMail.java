@@ -1,10 +1,9 @@
 package com.minsheng.oa.main.email;
 
 
-import com.minsheng.oa.main.email.MailJob;
 import com.minsheng.oa.utils.DateUtils;
 import org.quartz.*;
-import org.quartz.impl.StdSchedulerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -13,7 +12,8 @@ import java.util.Map;
 public class SchedulerMail {                //quartz初始化
 
 
-    private static SchedulerFactory schedulerFactory = new StdSchedulerFactory();
+    @Autowired
+    Scheduler scheduler;
 
     public JobDetail saveMatterJob(String jobName) {   //jobName 用matter 的id表示
         //任务实例
@@ -28,8 +28,6 @@ public class SchedulerMail {                //quartz初始化
 
     public void setSaveMaterTrigger(Integer matterId, String remindTime, String email) throws SchedulerException {   //保存matter时候触发
 
-        //创建调度器
-        Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
         String cronTime = DateUtils.stringtoCron(remindTime);  //字符串转cron 时间格式
         //触发器
         Trigger trigger = TriggerBuilder.newTrigger()
@@ -41,7 +39,7 @@ public class SchedulerMail {                //quartz初始化
                 // .startAt(startDate)
                 // .endAt() 结束时间
                 .build();
-
+        System.out.println(scheduler);
         scheduler.scheduleJob(saveMatterJob(matterId.toString()), trigger);  //调度器关联任务和触发器，按照触发器定义的条件执行任务
         scheduler.start();//启动调度器
 
@@ -65,7 +63,6 @@ public class SchedulerMail {                //quartz初始化
 
             //"2019-06-04 10:10:00"  ,  String 日期格式
             //创建调度器
-            Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
             System.out.println("第一次datetime 转化" + dateMap.get("date" + i));
 
             String cronTime = DateUtils.stringtoCron(dateMap.get("date" + i));  //字符串转cron
@@ -87,27 +84,19 @@ public class SchedulerMail {                //quartz初始化
 
     }
 
-    //调度器  从工厂中获取调度的实例  （new  StdSchedulerFactory ）
-    public void setScheduler() throws SchedulerException {
-
-    }
-
 
     /**
-     * @param jobName
-     * @param jobGroupName
-     * @param triggerName      触发器名
-     * @param triggerGroupName 触发器组名
-     * @param cron             时间设置，参考quartz说明文档
-     * @Description: 修改一个任务的触发时间
+     *  修改一个任务的触发时间
      */
     public  void modifyJobTime(String jobName, String jobGroupName,
                                      String triggerName, String triggerGroupName,
                                      String cron,String email) {
+        System.out.println(triggerName+triggerGroupName+cron+email+scheduler);
         try {
-            Scheduler sched = schedulerFactory.getScheduler();
+
             TriggerKey triggerKey = TriggerKey.triggerKey(triggerName, triggerGroupName);
-            CronTrigger trigger = (CronTrigger) sched.getTrigger(triggerKey);
+            System.out.println(triggerKey+"----------triggerKey");
+            CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
             if (trigger == null) {
                 return;
             }
@@ -125,7 +114,7 @@ public class SchedulerMail {                //quartz初始化
                 // 创建Trigger对象,调用 rescheduleJob 结束
                 trigger = (CronTrigger) triggerBuilder.build();
                 // 方式一 ：修改一个任务的触发时间
-                sched.rescheduleJob(triggerKey, trigger);
+                scheduler.rescheduleJob(triggerKey, trigger);
 
 
                 /** 方式二：先删除，然后在创建一个新的Job  */
@@ -140,52 +129,19 @@ public class SchedulerMail {                //quartz初始化
         }
     }
 
-    /**
-     * @param jobName
-     * @param jobGroupName
-     * @param triggerName
-     * @param triggerGroupName
-     * @Description: 移除一个任务
-     */
-    public static void removeJob(String jobName, String jobGroupName,
+// 移除一个任务
+
+    public  void removeJob(String jobName, String jobGroupName,
                                  String triggerName, String triggerGroupName) {
         try {
-            Scheduler sched = schedulerFactory.getScheduler();
-
             TriggerKey triggerKey = TriggerKey.triggerKey(triggerName, triggerGroupName);
 
-            sched.pauseTrigger(triggerKey);// 停止触发器
-            sched.unscheduleJob(triggerKey);// 移除触发器
-            sched.deleteJob(JobKey.jobKey(jobName, jobGroupName));// 删除任务
+            scheduler.pauseTrigger(triggerKey);// 停止触发器
+            scheduler.unscheduleJob(triggerKey);// 移除触发器
+            scheduler.deleteJob(JobKey.jobKey(jobName, jobGroupName));// 删除任务
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    /**
-     * @Description:启动所有定时任务
-     */
-    public static void startJobs() {
-        try {
-            Scheduler sched = schedulerFactory.getScheduler();
-            sched.start();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * @Description:关闭所有定时任务
-     */
-    public static void shutdownJobs() {
-        try {
-            Scheduler sched = schedulerFactory.getScheduler();
-            if (!sched.isShutdown()) {
-                sched.shutdown();
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-    }
 }
