@@ -9,12 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletContext;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -48,5 +46,19 @@ public class UploadController {
         }
         return resultMap.resutSuccess();
 
+    }
+
+
+    @GET
+    @Path("/images/{name}")
+    
+    public Response showImg(@PathParam("name") String imageName, @Context ServletContext ctx) throws IOException {
+        File f = new File(ctx.getRealPath("/upload"), imageName);
+        if (!f.exists()) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } else {
+            return Response.ok(f).header("Content-disposition", "attachment;filename=" + imageName)
+                    .header("Cache-Control", "no-cache").build();
+        }
     }
 }
