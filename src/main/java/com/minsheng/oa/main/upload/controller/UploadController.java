@@ -47,11 +47,11 @@ public class UploadController {
         return resultMap.resutSuccess();
 
     }
-
+   
 
     @GET
     @Path("/images/{name}")
-    
+
     public Response showImg(@PathParam("name") String imageName, @Context ServletContext ctx) throws IOException {
         File f = new File(ctx.getRealPath("/upload"), imageName);
         if (!f.exists()) {
