@@ -67,11 +67,6 @@ public class MatterController {
         matterService.updateMatter(matter);
         return resultMap.resutSuccess();
     }
-
-
-
-
-
 //    @Path("/getMatterPage")
 //    @GET
 //    @Produces("application/json")

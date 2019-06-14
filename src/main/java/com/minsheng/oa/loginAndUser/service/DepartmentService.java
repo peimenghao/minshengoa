@@ -10,7 +10,7 @@ import java.util.List;
 
 
 @Service
-public class DepartmentService {
+public class  DepartmentService {
 
     @Autowired
     DepartmentDao departmentDao;

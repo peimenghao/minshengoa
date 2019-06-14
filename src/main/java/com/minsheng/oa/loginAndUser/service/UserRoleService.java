@@ -11,9 +11,11 @@ public class UserRoleService {
     UserRoleDao userRoleDao;
 
     //------------------------
-    public void save(Integer  roleId ,Integer userId){
-         userRoleDao.saverRoleAndUser(roleId,userId);
+    public void save(Integer roleId, Integer userId) {
+        userRoleDao.saverRoleAndUser(roleId, userId);
+    }
 
-
+    public void updateUserRole(Integer userId, Integer roleId) {
+        userRoleDao.saverRoleAndUser(roleId, userId);
     }
 }

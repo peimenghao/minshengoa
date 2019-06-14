@@ -4,6 +4,7 @@ package com.minsheng.oa.loginAndUser.controller;
 import com.minsheng.oa.loginAndUser.model.Role;
 import com.minsheng.oa.loginAndUser.model.User;
 import com.minsheng.oa.loginAndUser.service.RoleService;
+import com.minsheng.oa.loginAndUser.service.UserRoleService;
 import com.minsheng.oa.loginAndUser.service.UserService;
 import com.minsheng.oa.utils.resultMap.ResultMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class UserController {
 
     @Autowired
     RoleService roleService;
+
+    @Autowired
+    UserRoleService userRoleService;
 
     @Autowired
     ResultMap resultMap;
@@ -83,11 +87,19 @@ public class UserController {
     }
 
 
-    @Path("/getUserbyLikeName")
+    @Path("/getUserbyLikeName")   //根据登陆用户名查询用户
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Map<String,Object> getUserbyLikeName(@QueryParam("likeName") String  likeName){             //查询所有用户
+    public Map<String,Object> getUserbyLikeName(@QueryParam("likeName") String  likeName){
         List<User> userList =userService.findUserbyLikeName(likeName);
+        return  resultMap.resutSuccessDate(userList);
+    }
+
+    @Path("/getUserbyRealName")  //根据真实姓名查询用户
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Map<String,Object> getUserbyRealName(@QueryParam("realName") String  realName){
+        List<User> userList =userService.findUserbyRealName(realName);
         return  resultMap.resutSuccessDate(userList);
     }
 
@@ -109,6 +121,15 @@ public class UserController {
         return  resultMap.resutSuccessDate(roles);
     }
 
+    @Path("/updateUserRole")      //设置用户角色
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Map<String, Object> updateUserRole(@FormParam("userId") Integer userId,
+                                              @FormParam("roleId") Integer roleId){
+            userRoleService.updateUserRole(userId,roleId);
+
+        return  resultMap.resutSuccess();
+    }
 
 
 }

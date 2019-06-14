@@ -78,6 +78,11 @@ public class UserService {
         List<User> userList=  userDao.findUserbyLikeName(likeName);
         return userList;
     }
+    public  List<User> findUserbyRealName(String realName) {   //  模糊查询用户
+        List<User> userList=  userDao.findUserbyRealName(realName);
+        return userList;
+    }
+
 
     public List<User> findUserByDepartId(Integer departId) {   //根据用户名id 查询用户
         List<User> users=  userDao.findUserByDepartId(departId);

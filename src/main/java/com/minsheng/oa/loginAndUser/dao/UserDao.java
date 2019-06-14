@@ -37,8 +37,13 @@ public interface UserDao extends JpaRepository<User, Integer> {
     String findPwsByName(String userName);
 
 
+    //根据登录名字查询角色
     @Query(value="select u.* from t_user u  where u.user_name like  %?1%",nativeQuery = true)
     List<User>  findUserbyLikeName(String userName);
+
+    //根据真实姓名查询用户
+    @Query(value="select u.* from t_user u  where u.real_name like  %?1%",nativeQuery = true)
+    List<User>  findUserbyRealName(String realName);
 
     @Transactional
     void removeByUserId(Integer id);
