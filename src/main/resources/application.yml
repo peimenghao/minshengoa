@@ -31,6 +31,10 @@ spring:
          ddl-auto: update
       show-sql: true
       open-in-view: true
+   http:
+      encoding:
+         charset: UTF-8
+         force: true
 server:
     port: 80
 

@@ -27,29 +27,28 @@ public class InitMatterMail {         //  查询整合成map资源 ，传值 创
 
     public void sendMail() {
         int no=0;         //map 键值对命名序号，
-        System.out.println(matterService);
-        List<Matter> matterList = matterService.findAllMatter();   //查询所有待办事项
+        List<Matter> matterList = matterService.findMatterByOver();   //查询所有未过期的matter
+
         Map<String, String> mailMap = new HashMap<String, String>();
         Map<String, String> dateMap = new HashMap<String, String>();
+        Map<String, String> matterIdMap = new HashMap<String, String>();
+
         for (int i = 0; i < matterList.size(); i++) {
-            String remindTime = matterList.get(i).getRemindTime();   //获得提醒时间
-            System.out.println("提醒时间"+remindTime);
-            Integer isOver=DateUtils.compareNowDate(remindTime);  // 和当前时间作比较  返回1 则表示未过期
+            Matter matter= matterList.get(i);      //获得matter 对象。
 
+            String  remindTime = matter.getRemindTime();   //获得提醒时间   第二重验证，看matter时间是否过期
+            Integer isOver=DateUtils.compareNowDate(remindTime);     // 和当前时间作比较  返回1 则表示未过期
             if(isOver==1){          //提醒时间如果没有过期
-
-            Integer userId = matterList.get(i).getUserId();       //获得用户id
+            Integer userId =matter.getUserId();       //获得用户id
             String userEmail = userService.findUserByUserId(userId).getEmail();        //数据库查询数据并且获得用户emial
-            System.out.println("userEmail"+userEmail);
-            System.out.println("remindTime"+remindTime);
             dateMap.put("date"+no,remindTime);
             mailMap.put("email"+no,userEmail);
+            matterIdMap.put("matterId"+no,matter.getMatterId().toString());
             no=no+1;
             }
         }
         try {
-
-            schedulerMail.setTrigger(dateMap,mailMap);
+            schedulerMail.setTrigger(dateMap,mailMap,matterIdMap);
         } catch (SchedulerException e) {
             e.printStackTrace();
         }

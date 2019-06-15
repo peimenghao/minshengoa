@@ -35,7 +35,8 @@ public class MailJob implements Job {
         String matterId=triggerDataMap.getString("matterId");
         System.out.println(email);
         System.out.println("job启动");
-
+        System.out.println(matterService);
+        System.out.println(matterId);
         matterService.updateMatterOver(Integer.valueOf(matterId));  //设置邮件过期
         sendMail.sendMail(email);  //发送邮件
 

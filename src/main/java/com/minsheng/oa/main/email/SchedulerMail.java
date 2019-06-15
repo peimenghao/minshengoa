@@ -21,18 +21,18 @@ public class SchedulerMail {                //quartz初始化
         //任务实例
         JobDetail jobDetail = JobBuilder.newJob(MailJob.class)         //Mailojob 必须实现job的接口
                 .withIdentity(jobName, "matterJob")   //任务名和 任务组 名
-               // .usingJobData("jobDateMessage", "job信息")  //传map 值
                 .storeDurably()
                 .build();
         return jobDetail;
     }
-               //单次保存matter 触发器
+
+    //单次保存matter 触发器
     public void setSaveMaterTrigger(Integer matterId, String remindTime, String email) throws SchedulerException {   //保存matter时候触发
 
         String cronTime = DateUtils.stringtoCron(remindTime);  //字符串转cron 时间格式
         //触发器
         Trigger trigger = TriggerBuilder.newTrigger()
-                .withIdentity(matterId.toString(), "matterTrigger")  //触发器名称和 触发器组  名
+                .withIdentity(matterId.toString() + "matterId", "matterTrigger")  //触发器名称和 触发器组  名
                 .startNow()//马上启动
                 .usingJobData("email", email)
                 .usingJobData("matterId", matterId.toString())
@@ -56,45 +56,42 @@ public class SchedulerMail {                //quartz初始化
 
     }
 
-    public void setTrigger(Map<String, String> dateMap, Map<String, String> emailMap) throws SchedulerException {   //局扫描触发器
+    public void setTrigger(Map<String, String> dateMap, Map<String, String> emailMap, Map<String, String> matterIdMap) throws SchedulerException {   //局扫描触发器
 
         for (int i = 0; i < dateMap.size(); i++) {
 
-            //"2019-06-04 10:10:00"  ,  String 日期格式
+            String mattteId = matterIdMap.get("matterId" + i);
+            System.out.println(mattteId);
+
             //创建调度器
             System.out.println("第一次datetime 转化" + dateMap.get("date" + i));
 
-            String cronTime = DateUtils.stringtoCron(dateMap.get("date" + i));  //字符串转cron
+            String cronTime = DateUtils.stringtoCron(dateMap.get("date" + i));  //转换触发时间 字符串转cron
             //触发器
             Trigger trigger = TriggerBuilder.newTrigger()
-                    .withIdentity(i + "trigger", "group1")  //触发器名称和 触发器组  名
+                    .withIdentity(mattteId, "matterTrigger")  //触发器名称()matterId  和 触发器组  名
                     .startNow()//马上启动
                     .usingJobData("email", emailMap.get("email" + i))
-                    .withSchedule(CronScheduleBuilder.cronSchedule(cronTime))  //日历
-                    //  .withSchedule(SimpleScheduleBuilder.simpleSchedule().repeatSecondlyForever(5))  // 重复重发间隔时间
-                    // .startAt(startDate)
-                    // .endAt() 结束时间
+                    .usingJobData("matterId", mattteId)
+                    .withSchedule(CronScheduleBuilder.cronSchedule(cronTime))  // 触发时间
                     .build();
 
             scheduler.scheduleJob(setJobDetail("job" + i), trigger);  //调度器关联任务和触发器，按照触发器定义的条件执行任务
             scheduler.start();//启动调度器
-
         }
-
     }
 
 
     /**
-     *  修改一个任务的触发时间
+     * 修改一个任务的触发时间
      */
-    public  void modifyJobTime(String jobName, String jobGroupName,
-                                     String triggerName, String triggerGroupName,
-                                     String cron,String email) {
-        System.out.println(triggerName+triggerGroupName+cron+email+scheduler);
+    public void modifyJobTime(String triggerName, String triggerGroupName,
+                              String cron, String email,
+                              Integer matterId) {
+        System.out.println(triggerName + triggerGroupName + cron + email + scheduler);
         try {
 
             TriggerKey triggerKey = TriggerKey.triggerKey(triggerName, triggerGroupName);
-            System.out.println(triggerKey+"----------triggerKey");
             CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
             if (trigger == null) {
                 return;
@@ -109,7 +106,8 @@ public class SchedulerMail {                //quartz初始化
                 triggerBuilder.startNow();
                 // 触发器时间设定
                 triggerBuilder.withSchedule(CronScheduleBuilder.cronSchedule(cron));
-                triggerBuilder.usingJobData("email",email);
+                triggerBuilder.usingJobData("email", email);
+                triggerBuilder.usingJobData("matterId", matterId.toString());
                 // 创建Trigger对象,调用 rescheduleJob 结束
                 trigger = (CronTrigger) triggerBuilder.build();
                 // 方式一 ：修改一个任务的触发时间
@@ -130,8 +128,8 @@ public class SchedulerMail {                //quartz初始化
 
 // 移除一个任务
 
-    public  void removeJob(String jobName, String jobGroupName,
-                                 String triggerName, String triggerGroupName) {
+    public void removeJob(String jobName, String jobGroupName,
+                          String triggerName, String triggerGroupName) {
         try {
 
             TriggerKey triggerKey = TriggerKey.triggerKey(triggerName, triggerGroupName);

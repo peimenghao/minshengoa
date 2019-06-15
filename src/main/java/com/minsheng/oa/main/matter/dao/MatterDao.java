@@ -20,6 +20,9 @@ public interface MatterDao extends JpaRepository<Matter,Integer> {
 
      List<Matter>  findAll();
 
+     @Query(value = "select * from t_matter where is_over=0",nativeQuery = true)  //查询未过期的matter
+     List<Matter> findMatterByOver();
+
      @Modifying
      @Transactional
      @Query(value="update  t_matter set content=?1,remind_time=?2,title=?3 where matter_id=?4",nativeQuery = true)

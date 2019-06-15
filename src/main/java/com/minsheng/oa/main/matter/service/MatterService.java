@@ -40,9 +40,9 @@ public class MatterService {
         matter.setIsOver(0);
         matter.setCreateTime(DateUtils.getTimestamp().toString());
         matterDao.save(matter);                         //保存待办事项到数据库
-        User user =  userService.findUserByUserId(matter.getUserId());
+        User user = userService.findUserByUserId(matter.getUserId());
         try {
-            schedulerMail.setSaveMaterTrigger(matter.getMatterId(),matter.getRemindTime(),user.getEmail());
+            schedulerMail.setSaveMaterTrigger(matter.getMatterId(), matter.getRemindTime(), user.getEmail());
         } catch (SchedulerException e) {
             e.printStackTrace();
         }
@@ -55,17 +55,23 @@ public class MatterService {
         return matterList;
     }
 
+    public List<Matter> findMatterByOver() {//查询 is_over
+        List<Matter> matterList = matterDao.findMatterByOver();
+        System.out.println(matterList);
+        return matterList;
+    }
+
     public void updateMatter(Matter matter) {
-         matterDao.updateMatter(matter.getContent(),matter.getRemindTime(),matter.getTitle(),matter.getMatterId()); //保存matter
-        User user= userService.findUserByUserId(matter.getUserId());        //获得用户信息
-        String remindTime= matter.getRemindTime();                //获得提醒时间
+        matterDao.updateMatter(matter.getContent(), matter.getRemindTime(), matter.getTitle(), matter.getMatterId()); //保存matter
+        User user = userService.findUserByUserId(matter.getUserId());        //获得用户信息
+        String remindTime = matter.getRemindTime();                //获得提醒时间
         String cronTime = DateUtils.stringtoCron(remindTime);       //cron提醒时间
 
-        System.out.println("matterId"+matter.getMatterId().toString()+"----email"+user.getEmail()+"");
+        System.out.println("matterId" + matter.getMatterId().toString() + "----email" + user.getEmail() + "");
         //启动触发器
-        schedulerMail.modifyJobTime(matter.getMatterId().toString(),"matterJob",
-                matter.getMatterId().toString(), "matterTrigger",
-                cronTime,user.getEmail());     //修改定时器时间，添加邮件信息
+        schedulerMail.modifyJobTime(matter.getMatterId().toString(), "matterTrigger",
+                                   cronTime, user.getEmail(),
+                                   matter.getMatterId());     //修改定时器时间，同时添加邮件信息
 
     }
 
