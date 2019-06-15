@@ -16,8 +16,8 @@ import javax.ws.rs.core.Response;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
-import java.util.UUID;
 
 @Path("/load")
 @Component
@@ -33,13 +33,14 @@ public class UploadController {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Map<String, Object> upload(@FormDataParam("file") InputStream fileInputStream,
                                       @FormDataParam("file") FormDataContentDisposition fileDetail,
-                                      @Context ServletContext ctx) {
-
-       String fileName= UUID.randomUUID().toString() + "." + fileDetail.getFileName();
-       // File upload = new File("D:\\upload",fileName);
-        File upload = new File("src/main/resources/static/upload",fileName);
+                                      @Context ServletContext ctx) throws UnsupportedEncodingException {
+       //修改编码格式
+        String fileName=  new String(fileDetail.getFileName().getBytes("ISO-8859-1"),"utf-8");
+        // File upload = new File("D:\\upload",fileName); //存在d盤
+        File upload = new File("src/main/resources/static/upload", fileName);
 
         try {
+
             FileUtils.copyInputStreamToFile(fileInputStream, upload);
         } catch (IOException e) {
             e.printStackTrace();
@@ -47,18 +48,20 @@ public class UploadController {
         return resultMap.resutSuccess();
 
     }
-   
 
-    @GET
-    @Path("/images/{name}")
 
-    public Response showImg(@PathParam("name") String imageName, @Context ServletContext ctx) throws IOException {
-        File f = new File(ctx.getRealPath("/upload"), imageName);
+    @POST
+    @Path("downLoad")
+    public Response showImg(@FormParam("fileName") String fileName, @Context ServletContext ctx) throws IOException {
+        System.out.println(fileName);
+        File f = new File("src/main/resources/static/upload", fileName);
         if (!f.exists()) {
             return Response.status(Response.Status.NOT_FOUND).build();
         } else {
-            return Response.ok(f).header("Content-disposition", "attachment;filename=" + imageName)
+            return Response.ok(f).header("Content-Disposition", "attachment;filename=" + fileName).encoding("charset=utf-8")
                     .header("Cache-Control", "no-cache").build();
         }
     }
+
+
 }

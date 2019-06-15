@@ -25,6 +25,13 @@ public interface MatterDao extends JpaRepository<Matter,Integer> {
      @Query(value="update  t_matter set content=?1,remind_time=?2,title=?3 where matter_id=?4",nativeQuery = true)
      void updateMatter(String content,String remindTime,String title,Integer matterId);
 
+
+
+     @Modifying
+     @Transactional
+     @Query(value="update  t_matter set is_over=1 where matter_id=?1",nativeQuery = true)
+     void updateMatterOver(Integer matterId);
+
 //
 //
 //     // 普通分页

@@ -8,10 +8,8 @@ import com.minsheng.oa.main.matter.dao.MatterDao;
 import com.minsheng.oa.main.matter.model.Matter;
 import com.minsheng.oa.utils.DateUtils;
 import com.minsheng.oa.utils.resultMap.ResultMap;
-import lombok.extern.slf4j.Slf4j;
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -69,6 +67,10 @@ public class MatterService {
                 matter.getMatterId().toString(), "matterTrigger",
                 cronTime,user.getEmail());     //修改定时器时间，添加邮件信息
 
+    }
+
+    public void updateMatterOver(Integer matterId) {
+        matterDao.updateMatterOver(matterId);
     }
 
 

@@ -22,12 +22,15 @@ public class InitMatterMail {         //  查询整合成map资源 ，传值 创
     @Autowired
     UserService userService;
 
+    @Autowired
+    SchedulerMail schedulerMail;
+
     public void sendMail() {
         int no=0;         //map 键值对命名序号，
         System.out.println(matterService);
         List<Matter> matterList = matterService.findAllMatter();   //查询所有待办事项
-        Map<String,String> mailMap=new HashMap<String, String>();
-        Map<String,String> dateMap=new HashMap<String, String>();
+        Map<String, String> mailMap = new HashMap<String, String>();
+        Map<String, String> dateMap = new HashMap<String, String>();
         for (int i = 0; i < matterList.size(); i++) {
             String remindTime = matterList.get(i).getRemindTime();   //获得提醒时间
             System.out.println("提醒时间"+remindTime);
@@ -44,7 +47,6 @@ public class InitMatterMail {         //  查询整合成map资源 ，传值 创
             no=no+1;
             }
         }
-        SchedulerMail schedulerMail=new SchedulerMail();    // 创建线程
         try {
 
             schedulerMail.setTrigger(dateMap,mailMap);

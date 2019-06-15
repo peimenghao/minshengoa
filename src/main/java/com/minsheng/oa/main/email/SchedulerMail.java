@@ -15,6 +15,8 @@ public class SchedulerMail {                //quartz初始化
     @Autowired
     Scheduler scheduler;
 
+
+    //单次保存matter  job
     public JobDetail saveMatterJob(String jobName) {   //jobName 用matter 的id表示
         //任务实例
         JobDetail jobDetail = JobBuilder.newJob(MailJob.class)         //Mailojob 必须实现job的接口
@@ -22,10 +24,9 @@ public class SchedulerMail {                //quartz初始化
                // .usingJobData("jobDateMessage", "job信息")  //传map 值
                 .storeDurably()
                 .build();
-
         return jobDetail;
     }
-
+               //单次保存matter 触发器
     public void setSaveMaterTrigger(Integer matterId, String remindTime, String email) throws SchedulerException {   //保存matter时候触发
 
         String cronTime = DateUtils.stringtoCron(remindTime);  //字符串转cron 时间格式
@@ -34,14 +35,12 @@ public class SchedulerMail {                //quartz初始化
                 .withIdentity(matterId.toString(), "matterTrigger")  //触发器名称和 触发器组  名
                 .startNow()//马上启动
                 .usingJobData("email", email)
+                .usingJobData("matterId", matterId.toString())
                 .withSchedule(CronScheduleBuilder.cronSchedule(cronTime))  //日历
-                //  .withSchedule(SimpleScheduleBuilder.simpleSchedule().repeatSecondlyForever(5))  // 重复重发间隔时间
-                // .startAt(startDate)
-                // .endAt() 结束时间
                 .build();
         System.out.println(scheduler);
         scheduler.scheduleJob(saveMatterJob(matterId.toString()), trigger);  //调度器关联任务和触发器，按照触发器定义的条件执行任务
-        scheduler.start();//启动调度器
+        scheduler.start();                       //启动调度器
 
     }
 
@@ -134,6 +133,7 @@ public class SchedulerMail {                //quartz初始化
     public  void removeJob(String jobName, String jobGroupName,
                                  String triggerName, String triggerGroupName) {
         try {
+
             TriggerKey triggerKey = TriggerKey.triggerKey(triggerName, triggerGroupName);
 
             scheduler.pauseTrigger(triggerKey);// 停止触发器

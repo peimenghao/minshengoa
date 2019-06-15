@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
 @Configuration
-public class QuartzConfig {           //job 交给spring注入
+public class QuartzConfig {           //job 交给spring 管理注入
 
     @Autowired
     private JobFactory jobFactory;

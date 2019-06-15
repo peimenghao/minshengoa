@@ -1,13 +1,16 @@
 package com.minsheng.oa.main.email.SendMail;
 
+import com.minsheng.oa.main.matter.service.MatterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SendMail {
-      @Autowired
-    MailConfiguration mailConfiguration ;
+    @Autowired
+    MailConfiguration mailConfiguration;
+
+
 
     public void sendMail(String to) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
@@ -19,7 +22,7 @@ public class SendMail {
             System.out.println(mailMessage);
             System.out.println(mailConfiguration.JavaMailSender());
             mailConfiguration.JavaMailSender().send(mailMessage);
-//            System.out.println("发送简单邮件");
+
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("发送简单邮件失败");
