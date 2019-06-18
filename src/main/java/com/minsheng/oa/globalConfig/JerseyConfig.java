@@ -1,6 +1,6 @@
 package com.minsheng.oa.globalConfig;
 
-import com.minsheng.oa.main.upload.controller.UploadController;
+import com.minsheng.oa.main.resource.controller.UploadController;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.stereotype.Component;
@@ -20,7 +20,7 @@ public class JerseyConfig extends ResourceConfig {
         packages("com.minsheng.oa.main.interview.controller");
         packages("com.minsheng.oa.main.matter.controller");
         packages("com.minsheng.oa.main.visitor.controller");
-        packages("com.minsheng.oa.main.upload.controller");
+        packages("com.minsheng.oa.main.resource.controller");
 
         register(MultiPartFeature.class);
         register(UploadController.class);
