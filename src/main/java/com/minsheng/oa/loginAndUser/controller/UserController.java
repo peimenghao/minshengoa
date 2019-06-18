@@ -68,20 +68,20 @@ public class UserController {
         return  resultMap.resutSuccess("更新成功");
     }
 
-    @Path("/getUsers")
+    @Path("/getUsers")            //查询所有用户
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Map<String,Object> getUsers(){             //查询所有用户
+    public Map<String,Object> getUsers(){
 
         List<User>  users = userService.find();
 
         return  resultMap.resutSuccessDate(users);
     }
 
-    @Path("/getUserById")
+    @Path("/getUserById")              //根据id查询用户
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Map<String,Object> getUserById(@QueryParam("userId") Integer userId){             //查询所有用户
+    public Map<String,Object> getUserById(@QueryParam("userId") Integer userId){
         User user =userService.findUserByUserId(userId);
         return  resultMap.resutSuccessDate(user);
     }
@@ -95,11 +95,11 @@ public class UserController {
         return  resultMap.resutSuccessDate(userList);
     }
 
-    @Path("/getUserbyRealName")  //根据真实姓名查询用户
+    @Path("/getUserByRealname")  //根据真实姓名查询用户
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Map<String,Object> getUserbyRealName(@QueryParam("realName") String  realName){
-        List<User> userList =userService.findUserbyRealName(realName);
+    public Map<String,Object> getUserbyRealName(@QueryParam("realname") String  realname){
+        List<User> userList =userService.findUserbyRealName(realname);
         return  resultMap.resutSuccessDate(userList);
     }
 

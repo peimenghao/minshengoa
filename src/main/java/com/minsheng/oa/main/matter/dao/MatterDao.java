@@ -35,8 +35,6 @@ public interface MatterDao extends JpaRepository<Matter,Integer> {
      @Query(value="update  t_matter set is_over=1 where matter_id=?1",nativeQuery = true)
      void updateMatterOver(Integer matterId);
 
-//
-//
 //     // 普通分页
 //     Page<Matter> getPage(Integer num, Integer size);
 }

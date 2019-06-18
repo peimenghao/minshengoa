@@ -63,6 +63,7 @@ public class MatterService {
 
     public void updateMatter(Matter matter) {
         matterDao.updateMatter(matter.getContent(), matter.getRemindTime(), matter.getTitle(), matter.getMatterId()); //保存matter
+
         User user = userService.findUserByUserId(matter.getUserId());        //获得用户信息
         String remindTime = matter.getRemindTime();                //获得提醒时间
         String cronTime = DateUtils.stringtoCron(remindTime);       //cron提醒时间
