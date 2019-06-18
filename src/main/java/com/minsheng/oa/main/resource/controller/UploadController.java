@@ -34,6 +34,9 @@ public class UploadController {
     @Autowired
     HttpServletRequest request;
 
+    //保存路径
+    String path = "src/main/resources/static/upload/";
+
     @Path("/upload")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -44,19 +47,17 @@ public class UploadController {
                                       @FormDataParam("userId") Integer userId
                                       )
             throws UnsupportedEncodingException {
-
-
-        //Integer userId = Integer.valueOf(request.getParameter("userId"));
-        System.out.println(userId);
-
         //修改编码格式,乱码中文文件名转格式
         String fileName = new String(fileDetail.getFileName().getBytes("ISO-8859-1"), "utf-8");
         //最终文件名字：uuid字符+ 扩展名
         String ResourceName = UUID.randomUUID() + fileName.substring(fileName.lastIndexOf("."));
         // File upload = new File("D:\\upload",fileName); //存在d盤
-        String path = "src/main/resources/static/upload/";  //保存路径
-        File upload = new File(path, ResourceName);
 
+        File upload = new File(path, ResourceName);
+        Resource dbResource=resourceService.findByResourceName(fileName);
+        if(dbResource!=null){
+            return  resultMap.resutError("文件名重复");
+        }
         Resource resource = new Resource();
         resource.setResourceName(ResourceName);
         resource.setOriginName(fileName);
@@ -78,15 +79,19 @@ public class UploadController {
     public Response downLoad(@FormParam("fileName") String fileName,
                             @Context ServletContext ctx)
             throws IOException {
-        System.out.println(fileName);
+
         Resource resource = resourceService.findByResourceName(fileName);  //根据文件名字查询资源
         System.out.println("resource.getResourceName()"+resource.getResourceName());
-        String resourceName = resource.getResourceName();                  //查询文件存储时的名字
-        File f = new File("src/main/resources/static/upload/", resourceName);
+        String resourceName = resource.getResourceName();                  //获得文件存储时的名字
+        String originName=resource.getOriginName();
+       String  suffix=originName.substring(originName.lastIndexOf("."));
+        System.out.println("originName"+originName);
+        File f = new File(path, resourceName);
+
         if (!f.exists()) {
             return Response.status(Response.Status.NOT_FOUND).build();
         } else {
-            return Response.ok(f).header("Content-Disposition", "attachment;filename=" + resourceName).encoding("charset=utf-8")
+            return Response.ok(f).header("Content-Disposition", "attachment;filename=" + originName).encoding("ISO-8859-1")
                     .header("Cache-Control", "no-cache").build();
         }
     }
