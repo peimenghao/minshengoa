@@ -40,7 +40,7 @@ public class UploadController {
     @Value("${path.upload}")
     private String path;
 
-
+     
     @Path("/upload")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
