@@ -8,6 +8,8 @@ import org.apache.commons.io.FileUtils;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +26,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Path("/load")
+@Component("GlobalProperties")
 public class UploadController {
 
     @Autowired
@@ -34,8 +37,9 @@ public class UploadController {
     @Autowired
     HttpServletRequest request;
 
-    //保存路径
-    String path = "src/main/resources/static/upload/";
+    @Value("${path.upload}")
+    private String path;
+
 
     @Path("/upload")
     @POST
@@ -45,7 +49,8 @@ public class UploadController {
                                       @FormDataParam("file") FormDataContentDisposition fileDetail,
                                       @Context ServletContext ctx,
                                       @FormDataParam("userId") Integer userId
-                                      )
+    )
+
             throws UnsupportedEncodingException {
         //修改编码格式,乱码中文文件名转格式
         String fileName = new String(fileDetail.getFileName().getBytes("ISO-8859-1"), "utf-8");
@@ -54,9 +59,9 @@ public class UploadController {
         // File upload = new File("D:\\upload",fileName); //存在d盤
 
         File upload = new File(path, ResourceName);
-        Resource dbResource=resourceService.findByResourceName(fileName);
-        if(dbResource!=null){
-            return  resultMap.resutError("文件名重复");
+        Resource dbResource = resourceService.findByResourceName(fileName);
+        if (dbResource != null) {
+            return resultMap.resutError("文件名重复");
         }
         Resource resource = new Resource();
         resource.setResourceName(ResourceName);
@@ -77,15 +82,14 @@ public class UploadController {
     @POST
     @Path("downLoad")
     public Response downLoad(@FormParam("fileName") String fileName,
-                            @Context ServletContext ctx)
+                             @Context ServletContext ctx)
             throws IOException {
 
         Resource resource = resourceService.findByResourceName(fileName);  //根据文件名字查询资源
-        System.out.println("resource.getResourceName()"+resource.getResourceName());
         String resourceName = resource.getResourceName();                  //获得文件存储时的名字
-        String originName=resource.getOriginName();
-       String  suffix=originName.substring(originName.lastIndexOf("."));
-        System.out.println("originName"+originName);
+        String originName = resource.getOriginName();
+      //  originName = new String(originName.getBytes(), "ISO-8859-1");
+        System.out.println("originName" + originName);
         File f = new File(path, resourceName);
 
         if (!f.exists()) {

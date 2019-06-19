@@ -40,6 +40,12 @@ server:
 
 
 
+path:
+    upload: D:\upload
+
+
+
+
 
 
 
