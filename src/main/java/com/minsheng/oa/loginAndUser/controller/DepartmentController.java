@@ -3,8 +3,6 @@ package com.minsheng.oa.loginAndUser.controller;
 
 import com.minsheng.oa.loginAndUser.model.Department;
 import com.minsheng.oa.loginAndUser.service.DepartmentService;
-import com.minsheng.oa.loginAndUser.service.RoleService;
-import com.minsheng.oa.loginAndUser.service.UserService;
 import com.minsheng.oa.utils.resultMap.ResultMap;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -18,13 +16,6 @@ import java.util.Map;
 
 @Path("/department")
 public class DepartmentController {
-
-
-    @Autowired
-    UserService userService;
-
-    @Autowired
-    RoleService roleService;
 
     @Autowired
     ResultMap resultMap;

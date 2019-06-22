@@ -47,11 +47,11 @@ public class User implements Serializable {
     @FormParam(value = "birthday")
     private String birthday;
 
-    @Column(name = "GENDER")
+    @Column(name = "GENDER")   //性别  0 女，1男
     @FormParam(value = "gender")
     private Integer gender;
 
-    @Column(name = "CREATE_TIME")
+    @Column(name = "CREATE_TIME")   //创建时间
     @FormParam(value = "createTime")
     private String createTime;
 
@@ -59,11 +59,13 @@ public class User implements Serializable {
     @FormParam(value = "updateTime")
     private String updateTime;
 
-    @Column(name = "REAL_NAME")
+    @Column(name = "REAL_NAME")   //真实姓名
     @FormParam(value = "realName")
     private String realName;
 
-
+    @Column(name = "position")      //职位
+    @FormParam(value = "position")
+    private String position;
 
     //  双向级联 防止 死循环, users为另一方的属性处，数据到此切断
     @JsonIgnoreProperties(value = {"users"}) //

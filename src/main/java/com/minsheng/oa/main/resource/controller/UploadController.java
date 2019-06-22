@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -34,13 +33,10 @@ public class UploadController {
     @Autowired
     ResourceService resourceService;
 
-    @Autowired
-    HttpServletRequest request;
-
     @Value("${path.upload}")
     private String path;
 
-     
+
     @Path("/upload")
     @POST
     @Produces(MediaType.APPLICATION_JSON)

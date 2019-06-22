@@ -35,13 +35,23 @@ spring:
       encoding:
          charset: UTF-8
          force: true
+
+   servlet:
+      multipart:
+         max-file-size: 100020
+         max-request-size:  1500000
 server:
-    port: 80
+    port: 8090
 
 
 
 path:
     upload: D:\upload
+
+
+
+
+
 
 
 
