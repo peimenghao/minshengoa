@@ -43,18 +43,19 @@ public class BinaryUploader {
 
 			String savePath = (String) conf.get("savePath");   //图片名字格式
 			long maxSize = ((Long) conf.get("maxSize")).longValue();
-			String localSavePathPrefix = (String) conf.get("localSavePathPrefix"); //路径前缀
+			String localSavePathPrefix = (String) conf.get("localSavePathPrefix"); //上传路径前缀
+			System.out.println("BinaryUploader---localSavePathPrefix--路径前缀=="+localSavePathPrefix);
 			String originFileName = file.getOriginalFilename();   //文件原始名
 			String suffix = FileType.getSuffixByFilename(originFileName);  //图片后缀
-			originFileName = originFileName.substring(0, originFileName.length() - suffix.length());
-			savePath = savePath + suffix;
+			originFileName = originFileName.substring(0, originFileName.length() - suffix.length());//没有后缀的文件名字
+			System.out.println("BinaryUploader---不带后缀的文件名字originFileName=="+originFileName);
+			savePath = savePath + suffix;  //图片命名格式+图片后缀
 			
-
 
 			if (!validType(suffix, (String[]) conf.get("allowFiles"))) {
 				return new BaseState(false, AppInfo.NOT_ALLOW_FILE_TYPE);
 			}
-			savePath = PathFormat.parse(savePath, originFileName);
+			savePath = PathFormat.parse(savePath, originFileName); //图片命名格式+图片后缀
 			localSavePathPrefix = localSavePathPrefix + savePath; 
 			String physicalPath = localSavePathPrefix;
 			logger.info("BinaryUploader physicalPath:{},savePath:{}",localSavePathPrefix,savePath);
@@ -63,16 +64,16 @@ public class BinaryUploader {
 			//在此处调用ftp的上传图片的方法将图片上传到文件服务器
 			String path = physicalPath.substring(0, physicalPath.lastIndexOf("/"));  //不带文件名字的保存路径
 			//准备保存完整文件名
-			String picName = physicalPath.substring(physicalPath.lastIndexOf("/")+1, physicalPath.length());
+			String savefileName = physicalPath.substring(physicalPath.lastIndexOf("/")+1, physicalPath.length());
 			//State storageState = StorageManager.saveFileByInputStream(request, is, path, picName, maxSize);//保存到服务器
-			System.out.println("path============"+path+"====picName====="+picName);
+			System.out.println("BinaryUploader---path=="+path+"====picName====="+savefileName);
 
-			  State storageState = StorageManager.saveFileToIdea(request, is, path, picName, maxSize);
+			  State storageState = StorageManager.saveFileToIdea(request, is, path, savefileName, maxSize);
 			  is.close();
 
 			if (storageState.isSuccess()) {
 				storageState.putInfo("type", suffix); //后缀
-				System.out.println("原始文件全名==="+originFileName + suffix);
+				System.out.println("BinaryUploader-----返回原始文件全名==="+originFileName + suffix);
 				storageState.putInfo("original", originFileName + suffix); //返回原始文件名
 			}
 

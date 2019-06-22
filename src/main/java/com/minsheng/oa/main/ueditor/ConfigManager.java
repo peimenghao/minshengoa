@@ -81,15 +81,17 @@ public final class ConfigManager {
 		
 		switch ( type ) {
 		
-			case ActionMap.UPLOAD_FILE:
+			case ActionMap.UPLOAD_FILE:   //上传文件
 				conf.put( "isBase64", "false" );
 				conf.put( "maxSize", this.jsonConfig.getLong( "fileMaxSize" ) );
 				conf.put( "allowFiles", this.getArray( "fileAllowFiles" ) );
 				conf.put( "fieldName", this.jsonConfig.getString( "fileFieldName" ) );
+				conf.put( "localSavePathPrefix", this.jsonConfig.getString( "localSavePathPrefix" ) );
+				System.out.println("localSavePathPrefix=="+jsonConfig.getString( "localSavePathPrefix" ) );
 				savePath = this.jsonConfig.getString( "filePathFormat" );
 				break;
 				
-			case ActionMap.UPLOAD_IMAGE:
+			case ActionMap.UPLOAD_IMAGE:      //上传图片
 				conf.put( "isBase64", "false" );
 				conf.put( "maxSize", this.jsonConfig.getLong( "imageMaxSize" ) );
 				conf.put( "allowFiles", this.getArray( "imageAllowFiles" ) );
@@ -146,9 +148,7 @@ public final class ConfigManager {
 		
 	}
 	
-	private void initEnv () throws FileNotFoundException, IOException {
-		System.out.println("获取文件配置");
-		
+	private void initEnv () throws FileNotFoundException, IOException {//获取文件配置
 		/*File file = new File( this.originalPath );
 		
 		if ( !file.isAbsolute() ) {

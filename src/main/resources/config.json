@@ -62,8 +62,9 @@
     /* 上传文件配置 */
     "fileActionName": "uploadfile", /* controller里,执行上传视频的action名称 */
     "fileFieldName": "upfile", /* 提交的文件表单名称 */
-    "filePathFormat": "D:/development/ideaPro/UeditorSpringboot-master/ueditor-demo/src/main/webapp/upload/images/", /* 上传保存路径,可以自定义保存路径和文件名格式 */
+    "filePathFormat": "D:/development/ideaPro/OAtest/minshengoa/src/main/webapp/upload/images/", /* 上传保存路径,可以自定义保存路径和文件名格式 */
     "fileUrlPrefix": "", /* 文件访问路径前缀 */
+     "localSavePathPrefix":"as",
     "fileMaxSize": 51200000, /* 上传大小限制，单位B，默认50MB */
     "fileAllowFiles": [
         ".png", ".jpg", ".jpeg", ".gif", ".bmp",
@@ -75,9 +76,9 @@
 
     /* 列出指定目录下的图片 */
     "imageManagerActionName": "listimage", /* 执行图片管理的action名称 */
-    "imageManagerListPath": "/ueditor/jsp/upload/image/", /* 指定要列出图片的目录 */
+    "imageManagerListPath": "D:/development/ideaPro/OAtest/minshengoa/src/main/webapp/upload/images/", /* 指定要列出图片的目录 */
     "imageManagerListSize": 20, /* 每次列出文件数量 */
-    "imageManagerUrlPrefix": "", /* 图片访问路径前缀 */
+    "imageManagerUrlPrefix": "D:/development/ideaPro/OAtest/minshengoa/src/main/webapp/upload/images/", /* 图片访问路径前缀 */
     "imageManagerInsertAlign": "none", /* 插入的图片浮动方式 */
     "imageManagerAllowFiles": [".png", ".jpg", ".jpeg", ".gif", ".bmp"], /* 列出的文件类型 */
 

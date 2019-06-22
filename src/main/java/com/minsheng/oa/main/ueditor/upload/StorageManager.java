@@ -33,11 +33,11 @@ public class StorageManager {
 	public StorageManager() {
 	}
 
-	public static State saveFileToIdea(HttpServletRequest request, InputStream is, String path, String picName,
+	public static State saveFileToIdea(HttpServletRequest request, InputStream is, String path, String savefileName,
                                        long maxSize) {   //上传图片到idea
 
 
-		File file =new  File(path+"/"+picName);
+		File file =new  File(path+"/"+savefileName);
 		State state = null;
 		byte[] dataBuf = new byte[ 2048 ];
 		int len=0;
@@ -61,9 +61,9 @@ public class StorageManager {
 				System.out.println("上传成功");
 				state = new BaseState(true);
 				state.putInfo( "size", file.length() );
-				state.putInfo( "title", picName);//文件名填入此处
+				state.putInfo( "title", savefileName);//文件名填入此处
 				state.putInfo( "group", "");//所属group填入此处
-				state.putInfo( "url", "http://localhost:8090/upload/images/"+picName);//文件访问的url填入此处
+				state.putInfo( "url", "http://localhost:8090/upload/images/"+savefileName);//文件访问的url填入此处
 			}else{
 				state = new BaseState(false, 4);
 			}
