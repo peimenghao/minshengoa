@@ -41,7 +41,7 @@ spring:
          max-file-size: 100020
          max-request-size:  1500000
 server:
-    port: 8090
+    port: 80
 
 
 

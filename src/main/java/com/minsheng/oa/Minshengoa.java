@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class Minshengoa {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Minshengoa.class);
 	public static void main(String[] args) {
-
 		SpringApplication.run(Minshengoa.class, args);
 		LOGGER.info("Ueditor application started!!!");
 	}
