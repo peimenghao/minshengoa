@@ -1,10 +1,14 @@
 package com.minsheng.oa.loginAndUser.config;
 
 
+import com.minsheng.oa.utils.resultMap.ResultMap;
+import org.apache.shiro.ShiroException;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -12,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA
@@ -25,6 +30,8 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());   //打印日志
 
+    @Autowired
+    ResultMap resultMap;
     /**
      * 如果带有 token，则对 token 进行检查，否则直接通过
      */
@@ -51,10 +58,10 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
      */
     @Override
     protected boolean isLoginAttempt(ServletRequest request, ServletResponse response) {
-        System.out.println("用户登入");
+        System.out.println("isLoginAttempt用户登入");
         HttpServletRequest req = (HttpServletRequest) request;
         String token = req.getHeader("Token");
-        return token != null;
+        return token != null;  //  不等于空 就是true;
     }
 
     /**
@@ -85,6 +92,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
             logger.error(e.getMessage());
         }
     }
+
 
 
 }

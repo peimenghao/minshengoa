@@ -3,6 +3,7 @@ package com.minsheng.oa.main.interview.controller;
 import com.minsheng.oa.main.interview.model.Interview;
 import com.minsheng.oa.main.interview.service.InterviewService;
 import com.minsheng.oa.utils.resultMap.ResultMap;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
@@ -24,10 +25,9 @@ public class Interviewcontroller {
     @Path("/getAllInterview")
     @GET
     @Produces("application/json")
+   // @RequiresRoles("admin")
     public Map<String, Object> getInterview() {
-
         List<Interview>  interview = interviewService.findAll();
-        System.out.println(interview);
         return resultMap.resutSuccessDate(interview);
     }
 

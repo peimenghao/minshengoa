@@ -35,8 +35,8 @@ public class CustomRealm extends AuthorizingRealm {   //用户认证
         System.out.println(token);
         // 解密获得username，用于和数据库进行对比
         String username = JWTUtil.getUsername(token);
-        System.out.println(username);
-        if (username == null || !JWTUtil.verify(token, username)) { //判断数据库存在用户，校验加密过的toekn
+        System.out.println("用户名"+username);
+        if (username == null || !JWTUtil.verify(token, username)) { //判断数据库存在用户，校验加密过的token
             throw new AuthenticationException("token认证失败！");
         }
         String password = userService.findByUserName(username).getPassword();   //根据用户名查询密码
@@ -48,6 +48,7 @@ public class CustomRealm extends AuthorizingRealm {   //用户认证
 //            throw new AuthenticationException("该用户已被封号！");
 //        }
          System.out.println("身份认证成功");
+
         return new SimpleAuthenticationInfo(token, token, "MyRealm");
     }
 
@@ -55,20 +56,20 @@ public class CustomRealm extends AuthorizingRealm {   //用户认证
     // 获取用户角色权限认证
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        System.out.println("权限认证");
+        System.out.println("-----------权限认证-----------");
         System.out.println(principals);    //token值
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-
         String userName = JWTUtil.getUsername(principals.toString());
         //  String userName  = (String) principals.getPrimaryPrincipal();          //获得用户名字
         User user = userService.findByUserName(userName);         //从数据库查出用户数据
         for (Role role : user.getRoleList()) {
             authorizationInfo.addRole(role.getRoleName());    // add用户角色
+            System.out.println(role.getRoleName());
             for (Permission p : role.getPermList()) {
                 authorizationInfo.addStringPermission(p.getPermName());  //add角色权限
             }
         }
-        System.out.println("权限认证成功");
+        System.out.println("权限识别成功");
         return authorizationInfo;
     }
 

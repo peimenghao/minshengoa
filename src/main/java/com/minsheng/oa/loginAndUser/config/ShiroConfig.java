@@ -29,7 +29,7 @@ public class ShiroConfig {
         FilterFactoryBean.setFilters(jwtFilterMap);
         FilterFactoryBean.setSecurityManager(securityManager);  //必须设定
 
-        FilterFactoryBean.setLoginUrl("/minsheng/login/unlogin");        //无token认证跳转
+    //    FilterFactoryBean.setLoginUrl("/minsheng/login/unlogin");        //无token认证跳转
 
         Map<String, String> filterMap = new HashMap<>();//自定义权限
         //权限拦截

@@ -90,10 +90,10 @@ public class LoginController {
         return resultMap.resutSuccessDate(departments);
     }
 
-    @Path("/unauth")
+    @Path("/unAuth")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Map<String, Object> unauth() {       //查询所有角色
+    public Map<String, Object> unauth() {       //无权限时候
 
 
         return resultMap.resutError("权限不足");
@@ -102,7 +102,7 @@ public class LoginController {
     @Path("/unlogin")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Map<String, Object> unlogin() {       //查询所有角色
+    public Map<String, Object> unlogin() {       //未登录
 
 
         return resultMap.resutError("请先登录~");
