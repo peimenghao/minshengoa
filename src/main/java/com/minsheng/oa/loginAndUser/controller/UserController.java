@@ -31,8 +31,6 @@ public class UserController {
     ResultMap resultMap;
 
 
-
-
     @Path("/deleteByUserId")
     @GET
     @Produces(MediaType.APPLICATION_JSON)

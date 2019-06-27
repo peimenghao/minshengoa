@@ -47,7 +47,7 @@ public class CustomRealm extends AuthorizingRealm {   //用户认证
 //        if (ban == 1) {
 //            throw new AuthenticationException("该用户已被封号！");
 //        }
-        System.out.println("身份认证成功");
+         System.out.println("身份认证成功");
         return new SimpleAuthenticationInfo(token, token, "MyRealm");
     }
 

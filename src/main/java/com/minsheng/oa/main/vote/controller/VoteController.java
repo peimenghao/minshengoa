@@ -38,34 +38,47 @@ public class VoteController {
     }
 
 
-    @Path("/getAllVote")  //根据投票所有内容
+    @Path("/deleteByThemeId")  //根据id获得一个投票所有内容
     @GET
     @Produces("application/json")
-    public Map<String, Object> getAllVote() {
-        List<VoteTheme> vote = voteService.findAllVote();
+    public Map<String, Object> deleteByThemeId(@QueryParam("themeId") Integer themeId) {
+        voteService.deleteByThemeId(themeId);
 
-        return resultMap.resutSuccessDate(vote);
+        return resultMap.resutSuccess("delete success");
+    }
+
+
+    @Path("/getAllVote")  //分页获取Vote
+    @GET
+    @Produces("application/json")
+    public Map<String, Object> getAllVote(@QueryParam("pageNo") Integer pageNo) {
+        if(pageNo==null||pageNo==0){
+            pageNo=1;
+        }
+        List<VoteTheme> voteList = voteService.findAllVote(pageNo,6);
+
+        return resultMap.resutSuccessDate(voteList);
     }
 
     @Path("/saveVote")  //保存一个vote
     @POST
     @Produces("application/json")
-    //@ResponseBody
     public Map<String, Object> saveVote(Map<String, Object> vote) {
-        //  {vote={content=谁最厉害, author=张三, endTime=12, anonymous=1, isSelectOne=1,
-        // voteOptionList=[{content=孙悟空, optionThemeId=1},
-        // {content=钢铁侠, optionThemeId=1},
-        // {content=鸣人, optionThemeId=1}]}}    //投票的所有 信息       知识点：传过来的map 里面如果还有集合， 就是自动被转成list 格式
-
         System.out.println(vote);
         VoteTheme voteTheme = new VoteTheme();
         VoteOption voteOption = new VoteOption();
-        Map<String, Object> map = (Map<String, Object>) vote.get("vote");
-        String content = (String) map.get("content");
-        String author = (String) map.get("author");
-        String endTime = (String) map.get("endTime");
-        Integer anonymous = (Integer) map.get("anonymous");
-        Integer isSelectOne = (Integer) map.get("isSelectOne");
+      //  Map<String, Object> map = (Map<String, Object>) vote.get("vote");
+        String content = (String) vote.get("content");
+        String author = (String) vote.get("author");
+        String endTime = (String) vote.get("endTime");
+        Integer anonymous = (Integer) vote.get("anonymous");
+        Integer isSelectOne = (Integer) vote.get("isSelectOne");
+
+       Integer  no= DateUtils.compareNowDate(endTime);
+        System.out.println("用户设定投票结束时间时间是否正确 no=="+no);
+       if(no==-1){
+           return  resultMap.resutError("time error");
+        }
 
         voteTheme.setContent(content);
         voteTheme.setAuthor(author);
@@ -75,7 +88,7 @@ public class VoteController {
         voteTheme.setCreatTime(DateUtils.getTimestamp().toString());
         Integer thmemeId = voteService.saveVoteTheme(voteTheme);
 
-        List<Object> voteOptionList = (ArrayList<Object>) map.get("voteOptionList");  //获得list
+        List<Object> voteOptionList = (ArrayList<Object>) vote.get("voteOptionList");  //获得list
         JSONArray OptionjArray = (JSONArray) JSON.toJSON(voteOptionList); //list 转json 数组
         //json 数组转list  对象集合
         List<VoteOption> voteOptionlist = JSONObject.parseArray(OptionjArray.toJSONString(), VoteOption.class);
@@ -86,13 +99,11 @@ public class VoteController {
 
             voteService.saveVoteOption(voteOption1);
         }
-
-
         return resultMap.resutSuccess();
     }
 
 
-    @Path("/saveOptionUser") //用户投票接口    //保存用户和选项id，返回此投票所有投票信息
+    @Path("/saveOptionUser")  //用户投票接口    //保存用户和选项id，返回此投票所有投票信息
     @POST
     @Produces("application/json")
     public Map<String, Object> saveOptionUser(@FormParam("optionId1") Integer optionId1,

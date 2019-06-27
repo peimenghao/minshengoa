@@ -7,7 +7,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.ws.rs.FormParam;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -35,13 +34,7 @@ public class Role {
         private String roleDesc;
 
 
-        @Column(name="CREATE_TIME")
-        @FormParam(value="roleCreate")
-        private Date roleCreate;
 
-        @Column(name="UPDATE_TIME")
-        @FormParam(value="updateTime")
-        private Date updateTime;
 
         @ManyToMany(fetch= FetchType.EAGER)//立即从数据库中进行加载数据;
         @JoinTable(name = "T_ROLE_PERM", joinColumns = { @JoinColumn(name = "ROLE_Id") }, inverseJoinColumns ={@JoinColumn(name = "perm_id") })

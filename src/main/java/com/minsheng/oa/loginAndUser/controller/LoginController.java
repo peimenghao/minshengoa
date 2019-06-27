@@ -2,7 +2,6 @@ package com.minsheng.oa.loginAndUser.controller;
 
 
 import com.minsheng.oa.loginAndUser.model.Department;
-import com.minsheng.oa.loginAndUser.model.Role;
 import com.minsheng.oa.loginAndUser.model.User;
 import com.minsheng.oa.loginAndUser.service.DepartmentService;
 import com.minsheng.oa.loginAndUser.service.RoleService;
@@ -50,12 +49,6 @@ public class LoginController {
         user.setCreateTime(DateUtils.getTimestamp().toString());
         user.getDepartment().setDepartId(departId);
 
-//        Role role=new Role();
-//        role.setRoleId(2);
-//        Set<Role> roles=new HashSet<Role>();
-//        roles.add(role);
-//        user.setRoleList(roles);
-
         userService.save(user);                 //保存到数据库
         User user1 = userService.findByUserName(user.getUserName());//获得杠保存到数据库的userid
         System.out.println(user1.getUserId());
@@ -97,27 +90,27 @@ public class LoginController {
         return resultMap.resutSuccessDate(departments);
     }
 
-
-    @Path("/getUsers")
+    @Path("/unauth")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Map<String, List<User>> getUsers() {             //查询所有用户
+    public Map<String, Object> unauth() {       //查询所有角色
 
-        List<User> users = userService.find();
 
-        Map<String, List<User>> map = new HashMap<String, List<User>>();
-        map.put("users", users);
-        return map;
+        return resultMap.resutError("权限不足");
     }
 
-    @Path("/getRole")
+    @Path("/unlogin")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Map<String, Object> getRole() {       //查询所有用户
+    public Map<String, Object> unlogin() {       //查询所有角色
 
-        List<Role> roles = roleService.findRole();
-        return resultMap.resutSuccessDate(roles);
+
+        return resultMap.resutError("请先登录~");
     }
+
+
+
+
 
 
 }
