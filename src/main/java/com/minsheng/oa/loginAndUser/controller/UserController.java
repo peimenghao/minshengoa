@@ -84,8 +84,16 @@ public class UserController {
         return  resultMap.resutSuccessDate(user);
     }
 
+    @Path("/getUserbyUserName")   //根据登陆用户名查询用户
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Map<String,Object> getUserbyUserName(@QueryParam("userName") String  userName){
+        User user =userService.findUserbyUsername(userName);
+        return  resultMap.resutSuccessDate(user);
+    }
 
-    @Path("/getUserbyLikeName")   //根据登陆用户名查询用户
+
+    @Path("/getUserbyLikeName")   //根据登陆用户名模糊查询查询用户
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Map<String,Object> getUserbyLikeName(@QueryParam("likeName") String  likeName){

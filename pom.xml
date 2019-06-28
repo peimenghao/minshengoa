@@ -19,7 +19,10 @@
 	</properties>
 
 	<dependencies>
-
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -111,6 +114,7 @@
 			<artifactId>fastjson</artifactId>
 			<version>1.2.41</version>
 		</dependency>
+
 	<dependency>
 		<groupId>org.apache.shiro</groupId>
 		<artifactId>shiro-spring</artifactId>

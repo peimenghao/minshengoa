@@ -18,14 +18,22 @@ public class CustomRealm extends AuthorizingRealm {   //用户认证
     @Autowired
     private UserService userService;
 
+    /**
+     * 必须重写此方法，不然Shiro会报错
+     */
+    @Override
+    public boolean supports(AuthenticationToken token) {
+
+        return token instanceof JWTToken;
+    }
 
     /**
      * 获取用户身份验证信息
      * Shiro中，最终是通过 Realm 来获取应用程序中的用户、角色及权限信息的。
      * authenticationToken 用户身份信息 token
-     *
      * @return 返回封装了用户信息的 AuthenticationInfo 实例
      */
+
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken)
             throws AuthenticationException {
@@ -52,12 +60,10 @@ public class CustomRealm extends AuthorizingRealm {   //用户认证
         return new SimpleAuthenticationInfo(token, token, "MyRealm");
     }
 
-
     // 获取用户角色权限认证
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         System.out.println("-----------权限认证-----------");
-        System.out.println(principals);    //token值
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         String userName = JWTUtil.getUsername(principals.toString());
         //  String userName  = (String) principals.getPrimaryPrincipal();          //获得用户名字
@@ -72,16 +78,4 @@ public class CustomRealm extends AuthorizingRealm {   //用户认证
         System.out.println("权限识别成功");
         return authorizationInfo;
     }
-
-
-    /**
-     * 必须重写此方法，不然Shiro会报错
-     */
-    @Override
-    public boolean supports(AuthenticationToken token) {
-
-        return token instanceof JWTToken;
-    }
-
-
 }

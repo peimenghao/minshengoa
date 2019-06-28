@@ -36,12 +36,15 @@ public interface UserDao extends JpaRepository<User, Integer> {
     @Query(value="select u.password from t_user u  where u.user_name=?1",nativeQuery = true)
     String findPwsByName(String userName);
 
+    @Query(value="select u.* from t_user u  where u.user_name =?1",nativeQuery = true)
+    User findUserByUsername(String userName);  //根据用户名查询角色
 
-    //根据登录名字查询角色
+
+    //根据登录名字模糊查询角色
     @Query(value="select u.* from t_user u  where u.user_name like  %?1%",nativeQuery = true)
     List<User>  findUserbyLikeName(String userName);
 
-    //根据真实姓名查询用户
+    //根据真实姓名模糊查询用户
     @Query(value="select u.* from t_user u  where u.real_name like  %?1%",nativeQuery = true)
     List<User>  findUserbyRealName(String realName);
 

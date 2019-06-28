@@ -32,7 +32,7 @@ public class UserService {
     }
 
     public void save(User user) {          //存储一个用户
-            userDao.save(user);
+        userDao.save(user);
 
     }
 
@@ -53,13 +53,13 @@ public class UserService {
 
     public void updatePasswordById(User user) {           //更新用户的  密码
 
-        userDao.updatePasswordById( user.getPassword(), user.getUserId());
+        userDao.updatePasswordById(user.getPassword(), user.getUserId());
 
     }
 
     public void updateUserData(User user) {           //更新用户基本信息
 
-        userDao.updateUserData( user.getEmail(),user.getBirthday(),user.getGender(),user.getPhone(),user.getRealName(),user.getUserName(),user.getUserId());
+        userDao.updateUserData(user.getEmail(), user.getBirthday(), user.getGender(), user.getPhone(), user.getRealName(), user.getUserName(), user.getUserId());
 
     }
 
@@ -69,23 +69,29 @@ public class UserService {
     }
 
     public User findUserByUserId(Integer userId) {     //根据用户名id 查询用户
-      User user=  userDao.findUserByUserId(userId);
+        User user = userDao.findUserByUserId(userId);
 
         return user;
     }
 
-    public  List<User> findUserbyLikeName(String likeName) {   //  模糊查询用户
-        List<User> userList=  userDao.findUserbyLikeName(likeName);
+    public List<User> findUserbyLikeName(String likeName) {   //  模糊查询用户
+        List<User> userList = userDao.findUserbyLikeName(likeName);
         return userList;
     }
-    public  List<User> findUserbyRealName(String realName) {   //  模糊查询用户
-        List<User> userList=  userDao.findUserbyRealName(realName);
+
+    public List<User> findUserbyRealName(String realName) {   //  模糊查询用户
+        List<User> userList = userDao.findUserbyRealName(realName);
         return userList;
+    }
+
+    public User findUserbyUsername(String userName) {   //  根据用户名查询用户
+        User user = userDao.findUserByUsername(userName);
+        return user;
     }
 
 
     public List<User> findUserByDepartId(Integer departId) {   //根据用户名id 查询用户
-        List<User> users=  userDao.findUserByDepartId(departId);
+        List<User> users = userDao.findUserByDepartId(departId);
 
         return users;
     }
