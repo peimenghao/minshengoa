@@ -50,7 +50,7 @@ public class ShiroConfig {
         factoryBean.setSecurityManager(securityManager);
         factoryBean.setUnauthorizedUrl("/minsheng/login/unAuth"); // 设置无权限时跳转的 url;
        factoryBean.setLoginUrl("/minsheng/login/unlogin");        //无token认证跳转
-
+ 
         /*
          * 自定义url规则
          * http://shiro.apache.org/web.html#urls-
