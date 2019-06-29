@@ -57,4 +57,15 @@ public class ResultMap {
 		return result;
 	}
 
+	/**
+	 *
+	 * @methodDesc: 功能描述:(自定义返回)
+	 */
+	public Map<String, Object> resutcode(Integer code, String msg) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put(BaseApiConstants.HTTP_CODE_NAME, code);
+		result.put(BaseApiConstants.HTTP_200_NAME, msg);
+		return result;
+	}
+
 }

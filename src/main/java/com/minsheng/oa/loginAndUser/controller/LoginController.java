@@ -96,7 +96,7 @@ public class LoginController {
     public Map<String, Object> unauth() {       //无权限时候
 
 
-        return resultMap.resutError("权限不足");
+        return resultMap.resutcode(401,"权限不足");
     }
 
     @Path("/unlogin")
@@ -105,7 +105,7 @@ public class LoginController {
     public Map<String, Object> unlogin() {       //未登录
 
 
-        return resultMap.resutError("请先登录~");
+        return resultMap.resutcode(404,"请先登录~");
     }
 
 
