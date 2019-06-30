@@ -99,7 +99,7 @@ server:
 path:
     upload: D:\upload
 
-
+   
 fdfs:
   so-timeout: 1501
   connect-timeout: 2000
