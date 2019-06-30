@@ -6,13 +6,15 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * 跨域请求处理
  * @author Guoqing
  *
  */
 @Configuration
-public class CrosConfig {
+public class CrosConfig {  //跨域请求
 	
 	private CorsConfiguration buildConfig() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
@@ -28,5 +30,7 @@ public class CrosConfig {
         source.registerCorsConfiguration("/**", buildConfig()); // 4
         return new CorsFilter(source);
     }
+
+
 
 }

@@ -27,4 +27,16 @@ public class  DepartmentService {
         return department;
     }
 
+    public  void  saveDepart(Department department){
+        departmentDao.save(department);
+    }
+
+    public  void updateDapart(Department department){
+        departmentDao.save(department);
+    }
+
+    public  void deleteDepatById(Integer departId){
+        departmentDao.deleteByDepartId(departId);
+    }
+
 }

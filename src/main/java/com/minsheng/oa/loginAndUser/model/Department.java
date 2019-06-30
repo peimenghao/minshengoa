@@ -26,7 +26,7 @@ public class Department {
 
 
     @Column(name = "depart_name")
-    @FormParam(value = "apartName")   //部门名字
+    @FormParam(value = "departName")   //部门名字
     private String departName;
 
     @Column(name = "depart_desc")  //部门描述

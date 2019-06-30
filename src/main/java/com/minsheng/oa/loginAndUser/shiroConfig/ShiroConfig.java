@@ -63,7 +63,7 @@ public class ShiroConfig {
         map.put("/minsheng/login/login", "anon");
         map.put("/ueditor/exec", "anon");
         map.put("/upload/**", "anon");
-        map.put("/**", "jwt");
+        //map.put("/**", "jwt");
         factoryBean.setFilterChainDefinitionMap(map);
         return factoryBean;
     }
