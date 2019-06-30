@@ -172,7 +172,7 @@ public final class ConfigManager {
 		System.out.println("ConfigManager----configContent=="+configContent);
 		try{
 			JSONObject jsonConfig = new JSONObject( configContent );
-			System.out.println("ConfigManager-----jsonConfig=="+jsonConfig);
+			System.out.println("ConfigManager--格式转换--jsonConfig=="+jsonConfig);
 			this.jsonConfig = jsonConfig;
 		} catch ( Exception e ) {
 			this.jsonConfig = null;
@@ -192,9 +192,7 @@ public final class ConfigManager {
 		for ( int i = 0, len = jsonArray.length(); i < len; i++ ) {
 			result[i] = jsonArray.getString( i );
 		}
-		
 		return result;
-		
 	}
 	
 	private String readFile ( String path ) throws IOException {

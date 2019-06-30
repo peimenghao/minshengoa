@@ -14,17 +14,17 @@ public class InterviewService {
     @Autowired
     InterviewDao interviewDao;
 
-//    public Interview findNewsById(Integer id){
-//
-//        return  interviewDao.findInterviewById(id);
-//    }
-
     public List<Interview>  findAll(){
 
         return  interviewDao.findAll();
     }
 
     public void  saveInterview(Interview interview){
+        interviewDao.save(interview);
+
+    }
+
+    public void  saveAndFlush(Interview interview){
         interviewDao.save(interview);
 
     }

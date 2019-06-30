@@ -3,6 +3,7 @@ package com.minsheng.oa.main.matter.controller;
 import com.minsheng.oa.main.matter.model.Matter;
 import com.minsheng.oa.main.matter.service.MatterService;
 import com.minsheng.oa.utils.resultMap.ResultMap;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.quartz.SchedulerFactory;
 import org.quartz.impl.StdSchedulerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,13 +54,6 @@ public class MatterController {
     }
 
 
-    /**
-     *  //更新指定待办事项   一次服务器启动期间为启动过的job，修改时间也会触发job。
-     *  不在一次服务器调动期间的job，不会触发job
-     *  *此处需要写逻辑 判断是否为过期Matter   （设字段 或者判断时间）
-     * @param matter
-     * @return
-     */
     @Path("/updateMatter")
     @POST
     @Produces("application/json")
@@ -67,6 +61,8 @@ public class MatterController {
         matterService.updateMatter(matter);
         return resultMap.resutSuccess();
     }
+
+
 //    @Path("/getMatterPage")
 //    @GET
 //    @Produces("application/json")

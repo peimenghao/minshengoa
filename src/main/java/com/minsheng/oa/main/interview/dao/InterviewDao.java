@@ -22,6 +22,10 @@ public interface InterviewDao extends JpaRepository<Interview, Integer> {
     @Transactional
     Interview save(Interview interview);
 
+    @Modifying
+    @Transactional
+    Interview  saveAndFlush(Interview interview);
+
 
 
 }

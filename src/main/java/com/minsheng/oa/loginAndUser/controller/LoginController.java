@@ -109,6 +109,24 @@ public class LoginController {
     }
 
 
+    @Path("/initAuth")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Map<String, Object> initAuth() {       //未登录
+
+
+        return resultMap.resutSuccess();
+    }
+
+
+    @Path("/401")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Map<String, Object>  tokenDie() {       //未登录
+
+        return resultMap.resutcode(401,"token过期");
+    }
+
 
 
 

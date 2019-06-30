@@ -63,10 +63,10 @@ public class BinaryUploader {
 			
 			//在此处调用ftp的上传图片的方法将图片上传到文件服务器
 			String path = physicalPath.substring(0, physicalPath.lastIndexOf("/"));  //不带文件名字的保存路径
-			//准备保存完整文件名
+			//文件名+后缀
 			String savefileName = physicalPath.substring(physicalPath.lastIndexOf("/")+1, physicalPath.length());
 			//State storageState = StorageManager.saveFileByInputStream(request, is, path, picName, maxSize);//保存到服务器
-			System.out.println("BinaryUploader---path=="+path+"====picName====="+savefileName);
+			System.out.println("BinaryUploader---path=="+path+"----savefileName====="+savefileName);
 
 			  State storageState = StorageManager.saveFileToIdea(request, is, path, savefileName, maxSize);
 			  is.close();

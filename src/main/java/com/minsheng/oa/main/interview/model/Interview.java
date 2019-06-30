@@ -19,6 +19,7 @@ public class Interview{
     @Id
     @Column(name="interview_id",length=50,nullable=false)
     @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @FormParam("interviewId")
     private Integer interviewId;
 
     @Column(name="interviewer_name") //面试者姓名
