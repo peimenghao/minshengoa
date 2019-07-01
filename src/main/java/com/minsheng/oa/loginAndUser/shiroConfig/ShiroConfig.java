@@ -56,15 +56,15 @@ public class ShiroConfig {
          * http://shiro.apache.org/web.html#urls-
          */
         Map<String, String> map = new HashMap();
-        map.put("/minsheng/interview/getAllInterview", "perms[select]");
-        map.put("/minsheng/interview/saveAllInterview", "roles[admin]");
-        map.put("/minsheng/login/initAuth", "perms[select]");
-        map.put("/minsheng/vote/getAllVote", "perms[select]");
+        map.put("/minsheng/interview/getAllInterview", "perms[admin]");
+        map.put("/minsheng/interview/saveInterview", "roles[admin]");
+        map.put("/minsheng/login/initAuth", "perms[admin]");
+        map.put("/minsheng/vote/getAllVote", "perms[admin]");
         map.put("/minsheng/login/login", "anon");
         map.put("/ueditor/exec", "anon");
         map.put("/upload/**", "anon");
-        //map.put("/**", "jwt");
-        factoryBean.setFilterChainDefinitionMap(map);
+       // map.put("/**", "jwt");
+        //factoryBean.setFilterChainDefinitionMap(map);
         return factoryBean;
     }
 

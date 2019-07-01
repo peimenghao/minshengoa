@@ -33,10 +33,10 @@ public class VisitorService {
 
     }
 
-    public Map<String, Object> save(Visitor visitor) {
+    public void save(Visitor visitor) {
 
         visitorDao.save(visitor);
 
-        return  resultMap.resutSuccess("保存成功");
+
     }
 }

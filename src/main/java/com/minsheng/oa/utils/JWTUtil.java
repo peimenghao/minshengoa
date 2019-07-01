@@ -10,7 +10,7 @@ import java.util.Date;
 
 public class JWTUtil {                //密码加密解密 设置时长
     // 过期时间 1 小时
-    private static final long EXPIRE_TIME = 60 * 1000;    //1000毫秒
+    private static final long EXPIRE_TIME = 60 *60 * 24*1000;    //1000毫秒
     // 密钥
     private static final String SECRET = "SHIRO+JWT";
 

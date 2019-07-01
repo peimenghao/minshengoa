@@ -37,7 +37,6 @@ public class LoginController {
     @Autowired
     DepartmentService departmentService;
 
-
     @Path("/register")
     @POST
     @Produces("application/json")
@@ -90,12 +89,12 @@ public class LoginController {
         return resultMap.resutSuccessDate(departments);
     }
 
+
+
     @Path("/unAuth")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Map<String, Object> unauth() {       //无权限时候
-
-
         return resultMap.resutcode(401,"权限不足");
     }
 
@@ -103,7 +102,6 @@ public class LoginController {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Map<String, Object> unlogin() {       //未登录
-
 
         return resultMap.resutcode(404,"请先登录~");
     }

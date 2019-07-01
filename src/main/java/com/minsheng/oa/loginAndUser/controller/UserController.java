@@ -89,6 +89,7 @@ public class UserController {
     @Produces(MediaType.APPLICATION_JSON)
     public Map<String,Object> getUserbyUserName(@QueryParam("userName") String  userName){
         User user =userService.findUserbyUsername(userName);
+        System.out.println(user);
         return  resultMap.resutSuccessDate(user);
     }
 

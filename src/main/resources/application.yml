@@ -45,8 +45,6 @@ spring:
 server:
     port: 80
 
-
-
 path:
     upload: D:\upload
 
@@ -92,7 +90,7 @@ spring:
 
 
 server:
-    port: 8091
+    port: 80
 
 
 
@@ -111,11 +109,11 @@ fdfs:
   tracker-list:            #TrackerList参数,支持多个
     - 192.168.0.108:22122
 
-     servlet:
-           multipart:
-             enabled: true
-             max-file-size: 20MB
-             max-request-size: 20MB
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 20MB
+      max-request-size: 20MB
 
 
 
