@@ -1,9 +1,11 @@
 package com.minsheng.oa.loginAndUser.shiroConfig;
 
+import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -11,35 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class JWTFilter extends BasicHttpAuthenticationFilter {
-
-    private Logger LOGGER = LoggerFactory.getLogger(this.getClass());
-
-    /**
-     * 判断用户是否想要登入。
-     * 检测header里面是否包含Authorization字段即可
-     */
-    @Override
-    protected boolean isLoginAttempt(ServletRequest request, ServletResponse response) {
-        HttpServletRequest req = (HttpServletRequest) request;
-        String authorization = req.getHeader("token");
-        return authorization != null;
-    }
-
-    /**
-     *
-     */
-    @Override
-    protected boolean executeLogin(ServletRequest request, ServletResponse response) throws Exception {
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        String token = httpServletRequest.getHeader("token");
-        System.out.println("JWTFilter---token=="+token);
-        JWTToken JWTtoken = new JWTToken(token);
-        // 提交给realm进行登入，如果错误他会抛出异常并被捕获
-        System.out.println("执行登录验证");
-        getSubject(request, response).login(JWTtoken);
-        // 如果没有抛出异常则代表登入成功，返回true
-        return true;
-    }
 
     /**
      * 这里我们详细说明下为什么最终返回的都是true，即允许访问
@@ -52,27 +25,53 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
      */
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
-        if (isLoginAttempt(request, response)) {
+        if (isLoginAttempt(request, response)) {  //如果带有请求头，进行token 校验
             try {
                 executeLogin(request, response);
-               // return  true;
+                 return  true;
             } catch (Exception e) {
-                response401(request, response);
+                e.printStackTrace();
+            }
+            System.out.println("执行方法isAccessAllowed");
+        }
+
+        return false; //false 表示关闭游客访问
+    }
+
+    /**
+     *  取出token  登录校验
+     */
+    @Override
+    protected boolean executeLogin(ServletRequest request, ServletResponse response) {
+        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+        String token = httpServletRequest.getHeader("token");
+        System.out.println("JWTFilter-即将进入reaml登录校验--token==" + token);
+        JWTToken JWTtoken = new JWTToken(token);
+        // 提交给realm进行登入，如果错误他会抛出异常并被捕获
+        try {
+            getSubject(request, response).login(JWTtoken); //校验token
+        } catch (AuthenticationException a) {
+            try {  //转发错误页面
+                request.getRequestDispatcher("/minsheng/login/401").forward(request, response);
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
-        return false;
+        // 如果没有抛出异常则代表登入成功，返回true,false直接拦截
+        return true;
     }
 
 
+
     /**
-     * 将非法请求跳转到 /401
+     * 判断用户是否想要登入。
+     * 检测header里面是否包含Authorization字段即可
      */
-    private void response401(ServletRequest req, ServletResponse resp) {
-        try {
-            HttpServletResponse httpServletResponse = (HttpServletResponse) resp;
-            httpServletResponse.sendRedirect("/minsheng/login/401");
-        } catch (IOException e) {
-            LOGGER.error(e.getMessage());
-        }
+    @Override
+    protected boolean isLoginAttempt(ServletRequest request, ServletResponse response) {
+        HttpServletRequest req = (HttpServletRequest) request;
+        String authorization = req.getHeader("token");
+        return authorization != null; // 有请求头返回   true
     }
 }

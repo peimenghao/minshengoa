@@ -25,7 +25,7 @@ public class Interviewcontroller {
     @Path("/getAllInterview")
     @GET
     @Produces("application/json")
-    @RequiresRoles("{admin}")
+    @RequiresRoles(value={"admin"})
     public Map<String, Object> getInterview() {
         List<Interview>  interview = interviewService.findAll();
         return resultMap.resutSuccessDate(interview);

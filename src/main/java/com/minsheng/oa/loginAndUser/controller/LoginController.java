@@ -110,7 +110,7 @@ public class LoginController {
     @Path("/initAuth")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Map<String, Object> initAuth() {       //未登录
+    public Map<String, Object> initAuth() {       //初始化
 
 
         return resultMap.resutSuccess();
@@ -122,7 +122,7 @@ public class LoginController {
     @Produces(MediaType.APPLICATION_JSON)
     public Map<String, Object>  tokenDie() {       //未登录
 
-        return resultMap.resutcode(401,"token过期");
+        return resultMap.resutcode(401,"no token");
     }
 
 

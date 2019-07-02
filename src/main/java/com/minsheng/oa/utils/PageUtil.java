@@ -2,7 +2,7 @@ package com.minsheng.oa.utils;
 
 import java.util.List;
 
-public class Page {
+public class PageUtil {
 	
 	/**
 	 * 当前页码  （已知）

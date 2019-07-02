@@ -7,7 +7,7 @@ import com.minsheng.oa.main.vote.dao.VoteThemeDao;
 import com.minsheng.oa.main.vote.model.VoteOption;
 import com.minsheng.oa.main.vote.model.VoteTheme;
 import com.minsheng.oa.main.vote.voteQuartz.VoteScheduler;
-import com.minsheng.oa.utils.Page;
+import com.minsheng.oa.utils.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,11 +33,11 @@ public class VoteService {
     public List<VoteTheme> findAllVote(Integer pageNo,Integer pageSize) {      //分页查询投票所有信息
         Integer totalcount = voteThemeDao.findAllVote().size();  //查询此类新闻总数量
         System.out.println("totalcount"+totalcount);
-        Page page = new Page();
-        page.setTotalCount(totalcount);                    //总个数
-        page.setPageNo(pageNo);                           //当前页码
-        page.setPageSize(pageSize);                       //每页数量
-        Integer startNum = page.getStartNum();            //起始行号 (第一行行号是 0)
+        PageUtil pageUtil = new PageUtil();
+        pageUtil.setTotalCount(totalcount);                    //总个数
+        pageUtil.setPageNo(pageNo);                           //当前页码
+        pageUtil.setPageSize(pageSize);                       //每页数量
+        Integer startNum = pageUtil.getStartNum();            //起始行号 (第一行行号是 0)
         List<VoteTheme> voteThemeList = voteThemeDao.findPageVote(startNum, pageSize);  //起始行号，每页数量
 
         return voteThemeList;

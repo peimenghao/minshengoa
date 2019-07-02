@@ -70,7 +70,8 @@ public class MyRealm extends AuthorizingRealm {
         String username = JWTUtil.getUsername(token);
         System.out.println(username);
         if (username == null || !JWTUtil.verify(token, username)) { //判断数据库存在用户，校验加密过的toekn
-            throw new AuthenticationException("token认证失败！");
+            throw new AuthenticationException("token----认证失败！");
+
         }
         String password = userService.findByUserName(username).getPassword();   //根据用户名查询密码
         if (password == null) {

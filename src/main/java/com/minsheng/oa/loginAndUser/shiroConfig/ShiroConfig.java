@@ -10,6 +10,7 @@ import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreato
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import javax.servlet.Filter;
 import java.util.HashMap;
@@ -56,15 +57,15 @@ public class ShiroConfig {
          * http://shiro.apache.org/web.html#urls-
          */
         Map<String, String> map = new HashMap();
-        map.put("/minsheng/interview/getAllInterview", "perms[admin]");
+       // map.put("/minsheng/interview/getAllInterview", "perms[admin]");
         map.put("/minsheng/interview/saveInterview", "roles[admin]");
         map.put("/minsheng/login/initAuth", "perms[admin]");
         map.put("/minsheng/vote/getAllVote", "perms[admin]");
         map.put("/minsheng/login/login", "anon");
         map.put("/ueditor/exec", "anon");
         map.put("/upload/**", "anon");
-       // map.put("/**", "jwt");
-        //factoryBean.setFilterChainDefinitionMap(map);
+       map.put("/**", "jwt");
+        factoryBean.setFilterChainDefinitionMap(map);
         return factoryBean;
     }
 
@@ -73,7 +74,7 @@ public class ShiroConfig {
      */
     @Bean
     @DependsOn("lifecycleBeanPostProcessor")
-    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
+    public DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator() {
         DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
         // 强制使用cglib，防止重复代理和可能引起代理出错的问题
         // https://zhuanlan.zhihu.com/p/29161098
@@ -92,4 +93,6 @@ public class ShiroConfig {
         advisor.setSecurityManager(securityManager);
         return advisor;
     }
+
+
 }
