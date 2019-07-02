@@ -19,17 +19,17 @@ public class ResourceService {
         return resourceList;
     }
 
-    public Resource findByResourceId(Integer resourceId) {
+    public Resource findByResourceId(Integer resourceId) {   //获得一个资源的信息
         Resource resource = resourceDao.findByResourceId(resourceId);
         return resource;
     }
 
-    public List<Resource> findByUserId(Integer userId) {
+    public List<Resource> findByUserId(Integer userId) {   //获得用户下的所有资源
         List<Resource> resourceList = resourceDao.findByUserId(userId);
         return resourceList;
     }
 
-    public Resource findByResourceName(String originName) {
+    public Resource findByOriginName(String originName) {
         Resource resource = resourceDao.findByOriginName(originName);
         return resource;
     }
@@ -37,4 +37,11 @@ public class ResourceService {
     public void saveResouce(Resource resource) {
         resourceDao.save(resource);
     }
+
+    public void deleteBySourceId(Integer resoureceId) {
+        resourceDao.deleteByResourceId(resoureceId);
+    }
+
+
+
 }

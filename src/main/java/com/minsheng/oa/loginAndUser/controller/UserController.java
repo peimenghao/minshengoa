@@ -105,8 +105,8 @@ public class UserController {
     @Path("/getUserByRealname")  //根据真实姓名查询用户
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Map<String,Object> getUserbyRealName(@QueryParam("realname") String  realname){
-        List<User> userList =userService.findUserbyRealName(realname);
+    public Map<String,Object> getUserbyRealName(@QueryParam("realName") String  realName){
+        List<User> userList =userService.findUserbyRealName(realName);
         return  resultMap.resutSuccessDate(userList);
     }
 

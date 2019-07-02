@@ -20,12 +20,13 @@ public class Resource {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer resourceId;
 
-    private String resourceName;   //存储时候的名字  ，即uuid 拼接后的名字
+//    private String resourceName;   //存储时候的名字  ，即uuid 拼接后的名字
 
     private String url;   //图片地址
 
-    private  String  originName;   //传过来的文件名字
+    private String  originName;   //原文件名字
 
+    private String  filePath;  //  fastID --例：  group1/M00/00/00/wKhuwV0avOKAXrp6AAAB7SFsc3Q552.txt
 
     private Integer userId;
 

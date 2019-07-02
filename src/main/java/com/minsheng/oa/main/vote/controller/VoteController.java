@@ -118,7 +118,7 @@ public class VoteController {
         /**
          *判断是否超时
          */
-        System.out.println("themeId"+themeId+"userId"+userId);
+        System.out.println("themeId"+themeId+"userId"+userId+optionId1+optionId2);
         VoteTheme voteTheme = voteService.findVoteThemeByThemeId(Integer.valueOf(themeId)); //查询此投票所有信息
         if (voteTheme.getOvertime() == 1) {
             return resultMap.resutError("overtime");

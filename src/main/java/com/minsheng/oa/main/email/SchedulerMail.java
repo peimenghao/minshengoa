@@ -16,15 +16,7 @@ public class SchedulerMail {                //quartz初始化
     Scheduler scheduler;
 
 
-    //单次保存matter  job
-    public JobDetail saveMatterJob(String jobName) {   //jobName 用matter 的id表示
-        //任务实例
-        JobDetail jobDetail = JobBuilder.newJob(MailJob.class)         //Mailojob 必须实现job的接口
-                .withIdentity(jobName, "matterJob")   //任务名和 任务组 名
-                .storeDurably()
-                .build();
-        return jobDetail;
-    }
+
 
     //单次保存matter 触发器
     public void setSaveMaterTrigger(Integer matterId, String remindTime, String email) throws SchedulerException {   //保存matter时候触发
@@ -39,7 +31,7 @@ public class SchedulerMail {                //quartz初始化
                 .withSchedule(CronScheduleBuilder.cronSchedule(cronTime))  //日历
                 .build();
         System.out.println(scheduler);
-        scheduler.scheduleJob(saveMatterJob(matterId.toString()), trigger);  //调度器关联任务和触发器，按照触发器定义的条件执行任务
+        scheduler.scheduleJob(setJobDetail(matterId.toString()), trigger);  //调度器关联任务和触发器，按照触发器定义的条件执行任务
         scheduler.start();                       //启动调度器
 
     }
@@ -131,7 +123,7 @@ public class SchedulerMail {                //quartz初始化
     public void removeJob(String jobName, String jobGroupName,
                           String triggerName, String triggerGroupName) {
         try {
-
+            System.out.println("执行删除job");
             TriggerKey triggerKey = TriggerKey.triggerKey(triggerName, triggerGroupName);
 
             scheduler.pauseTrigger(triggerKey);// 停止触发器

@@ -31,12 +31,13 @@ public class MatterService {
     SchedulerMail schedulerMail;
 
     public Map<String, Object> findMatterByUserId(Integer userId) {//根据userid数据库,查询此用户所有待办事项
-        List<Matter> matters = matterDao.findMatterByUserId(userId);
+        List<Matter> matters = matterDao.findByUserId(userId);
         Map<String, Object> map = resultMap.resutSuccessDate(matters);
         return map;
     }
 
     public void save(Matter matter) {         //新建待办事项
+        System.out.println("getRemindTime" + matter.getRemindTime());
         matter.setIsOver(0);
         matter.setCreateTime(DateUtils.getTimestamp().toString());
         matterDao.save(matter);                         //保存待办事项到数据库
@@ -71,8 +72,8 @@ public class MatterService {
         System.out.println("matterId" + matter.getMatterId().toString() + "----email" + user.getEmail() + "");
         //启动触发器
         schedulerMail.modifyJobTime(matter.getMatterId().toString(), "matterTrigger",
-                                   cronTime, user.getEmail(),
-                                   matter.getMatterId());     //修改定时器时间，同时添加邮件信息
+                cronTime, user.getEmail(),
+                matter.getMatterId());     //修改定时器时间，同时添加邮件信息
 
     }
 
@@ -81,9 +82,19 @@ public class MatterService {
     }
 
 
-//    public List<Matter> findMatterPage(Integer num,Integer size) {//分页查询
-//        List<Matter> matterList = (List<Matter>) matterDao.getPage(num, size);
-//        return matterList;
-//    }
+    public void deleteByMatterId(Integer matterId, Integer isOver) {
+        if (isOver == 0) {
+            String matterIdString = matterId.toString();
+            schedulerMail.removeJob(matterIdString, "group1",
+            matterIdString, "matterTrigger");
+        }
 
+        matterDao.deleteByMatterId(matterId);
+    }
+
+
+//    public Matter findByMatterId(Integer matterId) {
+//
+//      return   matterDao.findByMatterId(matterId);
+//    }
 }
