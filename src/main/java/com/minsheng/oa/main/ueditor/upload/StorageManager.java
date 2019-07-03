@@ -96,7 +96,7 @@ public class StorageManager {
 		return state;
 	}
 
-	public static State saveFileByInputStream(HttpServletRequest request, InputStream is, String path, String picName,
+	public static State saveTofastDFS(HttpServletRequest request, InputStream is, String path, String picName,
                                               long maxSize) {
 		State state = null;
 		File tmpFile = getTmpFile();

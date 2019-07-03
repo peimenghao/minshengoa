@@ -69,7 +69,7 @@ public class BinaryUploader {
 			System.out.println("BinaryUploader---path=="+path+"----savefileName====="+savefileName);
 
 			 // State storageState = StorageManager.saveFileToIdea(request, is, path, savefileName, maxSize);
-			State storageState = StorageManager.saveFileByInputStream(request, is, path, savefileName, maxSize);
+			State storageState = StorageManager.saveTofastDFS(request, is, path, savefileName, maxSize);
 			  is.close();
 
 			if (storageState.isSuccess()) {
