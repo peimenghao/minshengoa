@@ -50,7 +50,7 @@ public class FastDFSClientUtils {
      * @param fileName
      * @return
      */
-    public static String upload1(String filePaht,String fileName) {
+    public static String upload1(String filePaht,String fileName) { //文件路径，文件名字
         System.out.println(filePaht);
 
         String filePath = null;
@@ -63,7 +63,7 @@ public class FastDFSClientUtils {
     }
 
 
-    public static String upload(byte[] data, String fileName) {  //字节方式上传
+    public static String upload(byte[] data, String fileName) {  //字节 ，文件名字
 
             NameValuePair[] meta_list = null;
         String filePath = null;

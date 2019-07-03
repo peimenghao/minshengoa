@@ -1,6 +1,7 @@
 package com.minsheng.oa.main.ueditor.upload;
 
 
+import com.minsheng.oa.main.resource.dfs.FastDFSClientUtils;
 import com.minsheng.oa.main.ueditor.define.AppInfo;
 import com.minsheng.oa.main.ueditor.define.BaseState;
 import com.minsheng.oa.main.ueditor.define.State;
@@ -40,6 +41,7 @@ public class StorageManager {
 		byte[] dataBuf = new byte[ 2048 ];
 		int len=0;
 		try {
+			System.out.println("ppp");
 			InputStream in= new BufferedInputStream(is);
 			OutputStream out = new BufferedOutputStream(new FileOutputStream(file));
 			//转成字节流
@@ -96,11 +98,9 @@ public class StorageManager {
 
 	public static State saveFileByInputStream(HttpServletRequest request, InputStream is, String path, String picName,
                                               long maxSize) {
-		
 		State state = null;
 		File tmpFile = getTmpFile();
 		byte[] dataBuf = new byte[ 2048 ];
-
 		try {
 			//转成字节流
 			ByteArrayOutputStream swapStream = new ByteArrayOutputStream();  
@@ -112,26 +112,21 @@ public class StorageManager {
 	        dataBuf = swapStream.toByteArray();
 	        swapStream.flush();
 	        swapStream.close();
-
-			if (tmpFile.length() > maxSize) {
-				tmpFile.delete();
-				return new BaseState(false, AppInfo.MAX_SIZE);
-			}
 			//调用DFS的存储服务上传文件
 			//:TODO
 			/**
 			 * 此处调用文件上传服务，并获取返回结果返回
 			 */
-//			UploadResult result = baseFileService.upload(dataBuf, picName, "OM", null);
-			
+			String   filePath = FastDFSClientUtils.upload(dataBuf, picName);
+			System.out.println(filePath);  //group1/M00/00/00/wKhuwV0cacOAfgbgACjCJ-KlEu4872.jpg
 			boolean success = true;
 			//如果上传成功
 			if (success) {
 				state = new BaseState(true);
 				state.putInfo( "size", tmpFile.length() );
-				state.putInfo( "title", "");//文件名填入此处
-				state.putInfo( "group", "");//所属group填入此处
-				state.putInfo( "url", "");//文件访问的url填入此处
+				state.putInfo( "title", picName);//文件名填入此处
+				state.putInfo( "group", "gruop");//所属group填入此处
+				state.putInfo( "url", filePath);//文件访问的url填入此处
 				tmpFile.delete();
 			}else{
 				state = new BaseState(false, 4);
