@@ -33,7 +33,7 @@ public class VoteOption {
     private Integer optionThemeId;
 
     @JsonIgnoreProperties(value = {"department","roleList"}) //截断数据
-    @ManyToMany(fetch= FetchType.EAGER)//立即从数据库中进行加载数据;
+    @ManyToMany(fetch= FetchType.EAGER,cascade = CascadeType.ALL)//立即从数据库中进行加载数据;
     @JoinTable(name = "t_option_user", joinColumns = { @JoinColumn(name = "option_id") }, inverseJoinColumns ={@JoinColumn(name = "user_id") })
     private List<User> userList;//  多对多
 

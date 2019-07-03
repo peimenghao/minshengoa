@@ -6,6 +6,7 @@ import com.minsheng.oa.utils.resultMap.ResultMap;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
+import java.util.List;
 import java.util.Map;
 
 @Path("/visitor")
@@ -30,8 +31,8 @@ public class VisitorController {
     @GET
     @Produces("application/json")        //获得所有来访信息
     public Map<String,Object> getAllVisitor(){
-        Map<String,Object> map = visitorService.findAll();
-        return map;
+        List<Visitor> visitors = visitorService.findAll();
+        return resultMap.resutSuccessDate(visitors);
     }
 
 

@@ -52,6 +52,9 @@ public class VoteTheme{             //投票主题
     @FormParam(value="overtime")
     private Integer  overtime=0;
 
+    @Transient
+    private Integer  isClose;  //查詢信息时候 判断用户是否投票， 关闭投票
+
 
 
 
@@ -60,7 +63,7 @@ public class VoteTheme{             //投票主题
 //    //拥有mappedBy注解的实体类为关系被维护端
 //    private List<VoteOption> VoteOptionList;  //投票选项
 
-    @OneToMany(fetch = FetchType.EAGER) //单项一对多（只需要写一的一端）
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL) //单项一对多（只需要写一的一端）,级联  增删改查都影响 多的一段
     @JoinColumn(name="option_theme_id")      //多的一端的外键
     private List<VoteOption> voteOptionList = new ArrayList<>();
 
