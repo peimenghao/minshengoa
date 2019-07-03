@@ -40,7 +40,6 @@ public class StorageManager {
 		byte[] dataBuf = new byte[ 2048 ];
 		int len=0;
 		try {
-			System.out.println("ppp");
 			InputStream in= new BufferedInputStream(is);
 			OutputStream out = new BufferedOutputStream(new FileOutputStream(file));
 			//转成字节流

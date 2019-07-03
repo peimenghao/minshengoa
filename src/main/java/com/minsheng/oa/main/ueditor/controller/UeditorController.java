@@ -27,16 +27,6 @@ public class UeditorController {
 		String rootPath = request.getRealPath("/upload/images");
 		System.out.println(rootPath);
 		return new ActionEnter( request, rootPath ).exec();
-
 	}
-
-	@RequestMapping(value = "/aa")
-	@ResponseBody
-	public String aa(HttpServletRequest request) {
-
-		return "success";
-
-	}
-
 
 }
