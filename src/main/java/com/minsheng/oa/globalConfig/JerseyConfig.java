@@ -19,7 +19,7 @@ public class JerseyConfig extends ResourceConfig {
         packages("com.minsheng.oa.main.interview.controller");
         packages("com.minsheng.oa.main.matter.controller");
         packages("com.minsheng.oa.main.visitor.controller");
-      //  packages("com.minsheng.oa.main.resource.controller");
+        packages("com.minsheng.oa.main.resource.controller");
        // packages("com.minsheng.oa.main.ueditor.controller");
 
 

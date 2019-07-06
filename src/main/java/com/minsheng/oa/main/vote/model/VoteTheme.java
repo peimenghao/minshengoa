@@ -53,7 +53,7 @@ public class VoteTheme{             //投票主题
     private Integer  overtime=0;
 
     @Transient
-    private Integer  isClose;  //查詢信息时候 判断用户是否投票， 关闭投票
+    private Integer  isClose=0;  //查詢信息时候 判断用户是否投票， 关闭投票
 
 
 

@@ -46,7 +46,7 @@ server:
     port: 80
 
 path:
-    upload: D:\upload
+    upload: D:\envir\tomcat8\apache-tomcat-8.5.42\webapps\upload\
 
 fdfs:
   so-timeout: 1501
@@ -105,7 +105,7 @@ server:
 
 
 path:
-    upload: D:\upload
+    upload: D:\envir\tomcat8\apache-tomcat-8.5.42\webapps\upload\
 
    
 fdfs:

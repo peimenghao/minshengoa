@@ -55,10 +55,11 @@ public class DepartmentController {
         return resultMap.resutSuccessDate(department);
     }
 
-    @Path("/deleteDepatById")
+    @Path("/deleteDepatById")  //删除部门
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Map<String, Object> deleteDepatById(@QueryParam("departId") Integer departId) {            //查询所有的部门信息
+    public Map<String, Object> deleteDepatById(@QueryParam("departId") Integer departId) {
+         departmentService.findDepartmentByDepartId(departId);
         departmentService.deleteDepatById(departId);
         return resultMap.resutSuccess();
     }

@@ -19,12 +19,16 @@ public class ResourceService {
         return resourceList;
     }
 
-    public Resource findByResourceId(Integer resourceId) {   //获得一个资源的信息
+    public Resource findByResourceId(Integer resourceId) {   //根据id获得一个资源的信息
         Resource resource = resourceDao.findByResourceId(resourceId);
         return resource;
     }
 
-    public List<Resource> findByUserId(Integer userId) {   //获得用户下的所有资源
+    public List<Resource> findPublicFile() {   //获得公共有资源
+        List<Resource> resourceList = resourceDao.findPublicFile();
+        return resourceList;
+    }
+    public List<Resource> findByUserId(Integer userId) {   //获得用户私有资源
         List<Resource> resourceList = resourceDao.findByUserId(userId);
         return resourceList;
     }
