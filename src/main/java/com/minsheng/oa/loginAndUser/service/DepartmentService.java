@@ -15,6 +15,7 @@ public class  DepartmentService {
     @Autowired
     DepartmentDao departmentDao;
 
+
     public List<Department> findAll() {
         List<Department> departments = departmentDao.find();
         return departments;

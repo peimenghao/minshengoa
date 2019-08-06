@@ -77,6 +77,10 @@ public class User implements Serializable {
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)          //立即从数据库中进行加载数据;
     @JoinTable(name = "T_USER_ROLE", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "role_id")})
     private Set<Role> roleList = new HashSet<Role>();                   //  多对多
+
+    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JoinColumn(name="headpic_Id")
+    private Headpic headpic;
 }
 
 

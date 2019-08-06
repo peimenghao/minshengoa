@@ -49,8 +49,8 @@ public class ShiroConfig {
 
         factoryBean.setSecurityManager(securityManager);
         factoryBean.setUnauthorizedUrl("/minsheng/login/unAuth"); // 设置无权限时跳转的 url;
-       factoryBean.setLoginUrl("/minsheng/login/unlogin");        //无token认证跳转
- 
+        factoryBean.setLoginUrl("/minsheng/login/unlogin");        //无token认证跳转
+
         /*
          * 自定义url规则
          * http://shiro.apache.org/web.html#urls-
@@ -60,11 +60,12 @@ public class ShiroConfig {
 //        map.put("/minsheng/interview/saveInterview", "roles[admin]");
 //        map.put("/minsheng/login/initAuth", "perms[admin]");
 //        map.put("/minsheng/vote/getAllVote", "perms[admin]");
-         map.put("/minsheng/login/**", "anon");
+        map.put("/minsheng/login/**", "anon");
+        map.put("/minsheng/department/**", "anon");
 //        map.put("/ueditor/exec", "anon");
         map.put("/upload/**", "anon");
-      //  map.put("/**", "jwt");
-     //   factoryBean.setFilterChainDefinitionMap(map);
+        map.put("/**", "jwt");
+        factoryBean.setFilterChainDefinitionMap(map);
         return factoryBean;
     }
 

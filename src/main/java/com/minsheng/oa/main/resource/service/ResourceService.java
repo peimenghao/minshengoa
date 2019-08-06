@@ -33,8 +33,8 @@ public class ResourceService {
         return resourceList;
     }
 
-    public Resource findByOriginName(String originName) {
-        Resource resource = resourceDao.findByOriginName(originName);
+    public Resource findByOriginName(String originName,Integer isPublic,Integer userId) {
+        Resource resource = resourceDao.findByOriginNameAndIsPublicAndUserId(originName,isPublic,userId);
         return resource;
     }
 

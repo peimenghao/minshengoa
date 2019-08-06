@@ -6,7 +6,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Component;
 
 /**
- * 因为之前JavaMailSender 注入一直报null, 暂且只知道这个 手动实例化， 手动new 出来用
+ * 因为之前JavaMailSender 注入一直报null, 暂且只知道这个 手动实例化配置， 手动new 出来用
  */
 @Configuration
 @Component

@@ -12,6 +12,7 @@ import java.util.List;
 public interface UserDao extends JpaRepository<User, Integer> {
 
     //保存一条用户
+    @Modifying
     User save(User user);
 
     //查询用户通过密码和姓名

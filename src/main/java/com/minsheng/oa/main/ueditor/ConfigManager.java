@@ -4,9 +4,9 @@ package com.minsheng.oa.main.ueditor;
 import com.minsheng.oa.main.ueditor.define.ActionMap;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
-import org.springframework.util.ResourceUtils;
 
 import java.io.*;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -148,27 +148,37 @@ public final class ConfigManager {
 		
 	}
 	
-	private void initEnv () throws FileNotFoundException, IOException {//获取文件配置
-		/*File file = new File( this.originalPath );
-		
-		if ( !file.isAbsolute() ) {
-			file = new File( file.getAbsolutePath() );
-		}
-		//判断是否为本地环境，如果为本地环境，则需要更换json文件的读取路径
-		if( file.toString().contains(":\\") ){
-			file = new File("src/main/resources/config.json");
-			if ( !file.isAbsolute() ) {
-				file = new File( file.getAbsolutePath() );
+	private void initEnv () throws FileNotFoundException, IOException {
+		//获取文件配置，分 jar扫描和本地扫描
+		File file = null;
+		String resource = "/config.json";
+		URL res =this.getClass().getResource(resource);
+		System.out.println("res"+res);
+		System.out.println("res.getProtocol()"+res.getProtocol());
+		if (res.getProtocol().equals("jar")) {
+			try {
+				InputStream input = this.getClass().getResourceAsStream(resource);
+				file = File.createTempFile("fdfs_client", ".conf");
+				System.out.println("创建的"+file);
+				OutputStream out = new FileOutputStream(file);
+				int read;
+				byte[] bytes = new byte[1024];
+				while ((read = input.read(bytes)) != -1) {
+					out.write(bytes, 0, read);
+				}
+				out.close();
+			} catch (IOException ex) {
+				System.out.println("--报错");
 			}
+		} else {
+			//this will probably work in your IDE, but not from a JAR
+			file = new File(res.getFile());
 		}
-		
-		this.parentPath = file.getParent();
-		
-		String configContent = this.readFile( this.getConfigPath() );*/
-		//更改获取配置文件的方式
-		String configPath = ResourceUtils.getFile("classpath:config.json").getAbsolutePath();
-		System.out.println("ConfigManager----配置文件路径configPath=="+configPath);
-		String configContent =  this.readFile( configPath );
+
+
+		//String configPath = ResourceUtils.getFile("classpath:config.json").getAbsolutePath();
+		System.out.println("ConfigManager----配置文件路径configPath=="+file.toString());
+		String configContent =  this.readFile( file.toString() );
 		System.out.println("ConfigManager----configContent=="+configContent);
 		try{
 			JSONObject jsonConfig = new JSONObject( configContent );

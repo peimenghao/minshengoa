@@ -6,6 +6,7 @@ import org.csource.fastdfs.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.net.URL;
 
 /**
  *
@@ -20,8 +21,21 @@ import java.io.*;
 public class FastDFSClientUtils {
 
 
+    private static  String CONF_FILENAME;
+
+    static {
+        try {
+            File file=path();
+            System.out.println("扫描到的filePat是"+file);
+            CONF_FILENAME = file.toString();
+             file.deleteOnExit();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     //文件绝对路径
-    private static final String CONF_FILENAME = Thread.currentThread().getContextClassLoader().getResource("fdfs_client.conf").getPath();
+   // private static final String CONF_FILENAME = Thread.currentThread().getContextClassLoader().getResource("fdfs_client.conf").getPath();
+
 
 
     private static TrackerClient trackerClient;
@@ -42,6 +56,9 @@ public class FastDFSClientUtils {
         } catch (Exception e) {
 
         }
+    }
+
+    public FastDFSClientUtils() throws IOException {
     }
 
     /**
@@ -191,4 +208,45 @@ public class FastDFSClientUtils {
             }
         }
     }
+
+
+    /**
+     * jar包扫不到 配合文件处理类
+     * 读取resoures下的配置conf路径问题处
+     *  流化资源 → 写进新建的file→ClientGlobal读取新建的file 路径 初始化配置→
+     */
+    public static File  path() throws IOException {
+    FastDFSClientUtils fdfs=new FastDFSClientUtils();
+    File file = null;
+    String resource = "/fdfs_client.conf";
+    URL res =fdfs.getClass().getResource(resource);
+    System.out.println("res"+res);
+    System.out.println("res.getProtocol()"+res.getProtocol());
+    if (res.getProtocol().equals("jar")) {
+        try {
+            InputStream input = fdfs.getClass().getResourceAsStream(resource);
+            file = File.createTempFile("fdfs_client", ".conf");
+            System.out.println("创建的"+file);
+            OutputStream out = new FileOutputStream(file);
+            int read;
+            byte[] bytes = new byte[1024];
+
+            while ((read = input.read(bytes)) != -1) {
+                out.write(bytes, 0, read);
+            }
+            out.close();
+            return file;
+        } catch (IOException ex) {
+            System.out.println("--报错");
+        }
+    } else {
+        //this will probably work in your IDE, but not from a JAR
+        file = new File(res.getFile());
+    }
+
+    if (file != null && !file.exists()) {
+        throw new RuntimeException("Error: File " + file + " not found!");
+    }
+    return file;
+}
 }

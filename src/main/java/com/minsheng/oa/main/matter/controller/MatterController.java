@@ -4,8 +4,6 @@ import com.minsheng.oa.main.matter.model.Matter;
 import com.minsheng.oa.main.matter.service.MatterService;
 import com.minsheng.oa.utils.DateUtils;
 import com.minsheng.oa.utils.resultMap.ResultMap;
-import org.quartz.SchedulerFactory;
-import org.quartz.impl.StdSchedulerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
@@ -20,11 +18,6 @@ public class MatterController {
 
     @Autowired
     ResultMap resultMap;
-
-
-    private static SchedulerFactory schedulerFactory = new StdSchedulerFactory();
-    private static String JOB_GROUP_NAME = "EXTJWEB_JOBGROUP_NAME";
-    private static String TRIGGER_GROUP_NAME = "EXTJWEB_TRIGGERGROUP_NAME";
 
 
     @Path("/getMatter")//获得所有此用户的待办事项

@@ -6,14 +6,12 @@ import com.minsheng.oa.main.ueditor.define.AppInfo;
 import com.minsheng.oa.main.ueditor.define.BaseState;
 import com.minsheng.oa.main.ueditor.define.State;
 import org.apache.commons.io.FileUtils;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 
 @Component
-@ConfigurationProperties(prefix="nginx")
 public class StorageManager {
 	public static final int BUFFER_SIZE = 8192;
 	

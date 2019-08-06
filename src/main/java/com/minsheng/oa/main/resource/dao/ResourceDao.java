@@ -24,7 +24,8 @@ public interface ResourceDao extends JpaRepository<Resource, Integer> {
 
     Resource findByResourceId(Integer resourceId);  //根据id查询文件信息
 
-    Resource findByOriginName(String originName);  //根据文件名字查询文件
+    //磁盘查重
+    Resource findByOriginNameAndIsPublicAndUserId(String originName,Integer isPublic,Integer userId);  //根据文件名字查询文件
 
     @Transactional
     void  deleteByResourceId(Integer resoureceId);   //根据id删除文件

@@ -49,8 +49,7 @@ public class LoginController {
         user.getDepartment().setDepartId(departId);
 
         userService.save(user);                 //保存到数据库
-        User user1 = userService.findByUserName(user.getUserName());//获得杠保存到数据库的userid
-        System.out.println(user1.getUserId());
+        User user1 = userService.findByUserName(user.getUserName());//获得保存到数据库的userid
         userRoleService.save(2, user1.getUserId());
         return resultMap.resutSuccess();
     }

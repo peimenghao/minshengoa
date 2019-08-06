@@ -72,7 +72,7 @@ public class DateUtils {
     }
 
     /**
-     * 字符串转换为对应日期(可能会报错异常)
+     * 字符串转换为对应日期
      */
     public static Date stringToDate(String time, String pattern) {
         simpleDateFormat = new SimpleDateFormat(pattern);
@@ -95,19 +95,19 @@ public class DateUtils {
 
     }
 
-    /**
-     * 获得当前时间戳(单位秒)
-     */
-    public static long currentTimeStamp() {
-        return System.currentTimeMillis() / 1000;
-    }
-
-    /**
-     * @methodDesc: 功能描述:(获取当前系统时间戳)
-     */
+    // 功能描述:(获取当前系统时间戳) 2019-07-12 14:05:09.399
     public static Timestamp getTimestamp() {
         return new Timestamp(new Date().getTime());
     }
+
+
+    //(获取当前系统时间戳) 2019-07-12 14:05:09
+    public static  String getNowTime(){
+        String  time= getTimestamp().toString();
+        time =time.substring(0,time.lastIndexOf("."));
+        return  time;
+    }
+
 
 
     /**

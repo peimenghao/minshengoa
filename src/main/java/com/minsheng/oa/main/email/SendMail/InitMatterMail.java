@@ -13,8 +13,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 查询出所有待办事项，重新启动邮件发送任务
+ *
+ * 查询整合成map资源 ，传值 创建多个SchedulerMail 启动多个线程
+ */
 @Component
-public class InitMatterMail {         //  查询整合成map资源 ，传值 创建多个SchedulerMail 启动多个线程
+public class InitMatterMail {
 
     @Autowired
     MatterService matterService;

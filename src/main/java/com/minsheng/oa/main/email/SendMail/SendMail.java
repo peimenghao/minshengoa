@@ -1,6 +1,5 @@
 package com.minsheng.oa.main.email.SendMail;
 
-import com.minsheng.oa.main.matter.service.MatterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
@@ -28,6 +27,5 @@ public class SendMail {
             System.out.println("发送简单邮件失败");
         }
     }
-
 
 }
