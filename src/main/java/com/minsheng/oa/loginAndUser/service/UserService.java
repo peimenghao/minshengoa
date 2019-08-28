@@ -59,7 +59,7 @@ public class UserService {
 
     public void updateUserData(User user) {           //更新用户基本信息
 
-        userDao.updateUserData(user.getEmail(), user.getBirthday(), user.getGender(), user.getPhone(), user.getRealName(), user.getUserName(), user.getUserId());
+        userDao.updateUserData(user.getEmail(), user.getBirthday(), user.getGender(), user.getPhone(), user.getRealName(), user.getUserName(),user.getUserPosition(), user.getUserId());
 
     }
 

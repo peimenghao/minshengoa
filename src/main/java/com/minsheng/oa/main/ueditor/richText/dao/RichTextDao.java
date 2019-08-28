@@ -1,6 +1,5 @@
 package com.minsheng.oa.main.ueditor.richText.dao;
 
-import com.minsheng.oa.main.matter.model.Matter;
 import com.minsheng.oa.main.ueditor.richText.model.RichText;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -16,12 +15,19 @@ public interface RichTextDao extends JpaRepository<RichText, Integer> {
     @Modifying
     RichText save(RichText richText);    //保存修改富文本
 
-    @Query(value = "select r.text_id,r.title,r.text_time,r.user_id from rich_text r where user_Id=1?", nativeQuery = true)
-    List<Matter> findAlltext(Integer userId);         //查询所有文本部分信息；
+    RichText findByTextIdOrderByTextIdAsc(Integer textId); //查根据textId,询单个文本
 
-    RichText findByTextId(Integer textId); //查根据textId,询单个文本
+    List<RichText> findByUserIdNum(Integer userId);  //根据userId 查询文本
 
-    List<RichText> findByUserId(Integer userId);  //根据userId 查询文本
+    List<RichText>  findByUserIdNumAndPublishType(Integer userId,Integer publishType);
+
+    @Query(value = "select * from t_rich_text r where publish_type=?1 or publish_type=2", nativeQuery = true)
+    List<RichText> findByPublishType(Integer publishType);  //查询所有广场文章
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE t_rich_text SET no_comment=?1 where text_id=?2", nativeQuery = true)
+    void updateNoComment(String  noComment,Integer textId);    //是否禁言
 
     @Transactional
     void deleteByTextId(Integer textId);

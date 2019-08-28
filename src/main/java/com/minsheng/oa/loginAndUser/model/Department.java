@@ -34,10 +34,11 @@ public class Department {
     private String departDesc;
 
 
+    //双向
     @OneToMany(mappedBy = "department", cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
     @JsonIgnoreProperties(value = {"department","roleList"})   //断掉后面数据
-    //拥有mappedBy注解的实体类为关系  被  维护端
-    //mappedBy="company"中的company是Employee中的company属性
+    //拥有mappedBy注解的实体类为关系  被  维护端  ，有mapperd 就不用建新表
+    //mappedBy="department"中的department是user中的department属性
     private List<User> users = new ArrayList<User>();
 
 }

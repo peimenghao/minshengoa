@@ -21,6 +21,8 @@ import java.util.Map;
 
 
 public class BinaryUploader {
+
+
     static Logger logger = LoggerFactory.getLogger(BinaryUploader.class);
     
 	public static final State save(HttpServletRequest request, Map<String, Object> conf) {

@@ -62,7 +62,7 @@ public class ShiroConfig {
 //        map.put("/minsheng/vote/getAllVote", "perms[admin]");
         map.put("/minsheng/login/**", "anon");
         map.put("/minsheng/department/**", "anon");
-//        map.put("/ueditor/exec", "anon");
+        map.put("/ueditor/exec", "anon");
         map.put("/upload/**", "anon");
         map.put("/**", "jwt");
         factoryBean.setFilterChainDefinitionMap(map);

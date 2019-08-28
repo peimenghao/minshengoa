@@ -101,7 +101,7 @@ public class DateUtils {
     }
 
 
-    //(获取当前系统时间戳) 2019-07-12 14:05:09
+    //(获取当前系统时间) 2019-07-12 14:05:09
     public static  String getNowTime(){
         String  time= getTimestamp().toString();
         time =time.substring(0,time.lastIndexOf("."));

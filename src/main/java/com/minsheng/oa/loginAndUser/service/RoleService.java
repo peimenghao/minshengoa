@@ -9,13 +9,16 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class RoleService  {
+public class RoleService {
     @Autowired
     RoleDao roleDao;
 
     //------------------------
-    public List<Role> findRole(){
-        return  roleDao.findRole();
+    public List<Role> findRole() {
+        return roleDao.findRole();
     }     //查询所有role
 
+    public Role findByRoleId(Integer roleId) {
+        return roleDao.findByRoleId(roleId);
+    }
 }

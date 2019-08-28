@@ -53,8 +53,9 @@ public class FdsController {  //
 
         // 查询私有或者共享盘文件是否有这个文件名字
         Resource dbResource = resourceService.findByOriginName(fileName,isPublic,userId);
+        System.out.println("dbResource"+dbResource);
         if (dbResource != null) {
-            return resultMap.resutError("文件名重复");
+            return resultMap.resutError("上传失败，文件名重复");
         }
 
         String suffix = fileName.substring(fileName.lastIndexOf("."));
@@ -80,7 +81,7 @@ public class FdsController {  //
         resource.setIsPublic(isPublic);
         resourceService.saveResouce(resource);
 
-        return resultMap.resutSuccess();
+        return resultMap.resutSuccess("上传成功");
     }
 
 

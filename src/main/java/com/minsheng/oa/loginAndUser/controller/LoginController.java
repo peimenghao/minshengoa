@@ -2,10 +2,10 @@ package com.minsheng.oa.loginAndUser.controller;
 
 
 import com.minsheng.oa.loginAndUser.model.Department;
+import com.minsheng.oa.loginAndUser.model.Role;
 import com.minsheng.oa.loginAndUser.model.User;
 import com.minsheng.oa.loginAndUser.service.DepartmentService;
 import com.minsheng.oa.loginAndUser.service.RoleService;
-import com.minsheng.oa.loginAndUser.service.UserRoleService;
 import com.minsheng.oa.loginAndUser.service.UserService;
 import com.minsheng.oa.utils.DateUtils;
 import com.minsheng.oa.utils.JWTUtil;
@@ -31,8 +31,6 @@ public class LoginController {
     @Autowired
     ResultMap resultMap;
 
-    @Autowired
-    UserRoleService userRoleService;
 
     @Autowired
     DepartmentService departmentService;
@@ -42,15 +40,23 @@ public class LoginController {
     @Produces("application/json")
     public Map<String, Object> register(@BeanParam User user, @FormParam("departId") Integer departId) {             //注册用户
         User u = userService.findByUserName(user.getUserName());  //根据用户名查询用户
+        System.out.println("--------"+user.getUserName());
+        System.out.println("--------"+u);
         if (u != null) {                                   //判断用户是否已存在
             return resultMap.resutError("用户名重复");
         }
-        user.setCreateTime(DateUtils.getTimestamp().toString());
-        user.getDepartment().setDepartId(departId);
+        user.setCreateTime(DateUtils.getNowTime());
+        if(departId!=null){
+            user.getDepartment().setDepartId(departId);
+        }
+
+        Role role = roleService.findByRoleId(2);
+//        Role role=new Role();
+//        role.setRoleId(1);
+        user.getRoleList().add(role);
 
         userService.save(user);                 //保存到数据库
-        User user1 = userService.findByUserName(user.getUserName());//获得保存到数据库的userid
-        userRoleService.save(2, user1.getUserId());
+//        User user1 = userService.findByUserName(user.getUserName());//获得保存到数据库的userid
         return resultMap.resutSuccess();
     }
 
@@ -60,7 +66,6 @@ public class LoginController {
     @Produces("application/json")
     public Map<String, String> doLogin(@FormParam("userName") String userName,
                                        @FormParam("password") String password) {
-        System.out.println(userName + password);
         Map<String, String> map = new HashMap<String, String>();
         String realPws = userService.findPwsByName(userName);
         if (realPws == null) {
@@ -89,12 +94,11 @@ public class LoginController {
     }
 
 
-
     @Path("/unAuth")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Map<String, Object> unauth() {       //无权限时候
-        return resultMap.resutcode(401,"权限不足");
+        return resultMap.resutcode(401, "权限不足");
     }
 
     @Path("/unlogin")
@@ -102,7 +106,7 @@ public class LoginController {
     @Produces(MediaType.APPLICATION_JSON)
     public Map<String, Object> unlogin() {       //未登录
 
-        return resultMap.resutcode(404,"请先登录~");
+        return resultMap.resutcode(404, "请先登录~");
     }
 
 
@@ -119,13 +123,10 @@ public class LoginController {
     @Path("/401")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Map<String, Object>  tokenDie() {       //未登录
+    public Map<String, Object> tokenDie() {       //未登录
 
-        return resultMap.resutcode(401,"no token");
+        return resultMap.resutcode(401, "no token");
     }
-
-
-
 
 
 }

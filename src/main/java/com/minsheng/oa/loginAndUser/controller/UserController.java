@@ -7,7 +7,6 @@ import com.minsheng.oa.loginAndUser.model.Role;
 import com.minsheng.oa.loginAndUser.model.User;
 import com.minsheng.oa.loginAndUser.service.HeadpicService;
 import com.minsheng.oa.loginAndUser.service.RoleService;
-import com.minsheng.oa.loginAndUser.service.UserRoleService;
 import com.minsheng.oa.loginAndUser.service.UserService;
 import com.minsheng.oa.main.resource.dfs.FastDFSClientUtils;
 import com.minsheng.oa.utils.FileUtil;
@@ -40,8 +39,6 @@ public class UserController {
     @Autowired
     HeadpicService headpicService;
 
-    @Autowired
-    UserRoleService userRoleService;
 
     @Autowired
     ResultMap resultMap;
@@ -83,7 +80,8 @@ public class UserController {
     @Path("/updateUserData")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Map<String, Object> updateUserData(@BeanParam User user) {             //更改用户和密码
+    public Map<String, Object> updateUserData(@BeanParam User user) {             //更改用户基本信息
+        System.out.println(user.getUserPosition()+"2222");
         userService.updateUserData(user);
         return resultMap.resutSuccess("更新成功");
     }
@@ -124,7 +122,7 @@ public class UserController {
         return resultMap.resutSuccessDate(userList);
     }
 
-    @Path("/getUserByRealname")  //根据真实姓名查询用户
+    @Path("/getUserByRealname")  //根据真实姓名模糊查询用户
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Map<String, Object> getUserbyRealName(@QueryParam("realName") String realName) {
@@ -155,7 +153,7 @@ public class UserController {
     @Produces(MediaType.APPLICATION_JSON)
     public Map<String, Object> updateUserRole(@FormParam("userId") Integer userId,
                                               @FormParam("roleId") Integer roleId) {
-        userRoleService.updateUserRole(userId, roleId);
+//        userRoleService.updateUserRole(userId, roleId);
 
         return resultMap.resutSuccess();
     }
@@ -180,8 +178,7 @@ public class UserController {
         String picPath = FastDFSClientUtils.upload(bytes, picName);  //字节流方式上传图片服务器
 
         //拼装服务器url
-        String url = resHost + ":" + storagePort + "/" + picPath;
-        System.out.println("url" + url);
+        String url = "http://"+resHost + ":" + storagePort + "/" + picPath;
 
 
         //创建用户

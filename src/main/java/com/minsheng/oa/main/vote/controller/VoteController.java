@@ -95,7 +95,7 @@ public class VoteController {
         voteTheme.setEndTime(endTime);
         voteTheme.setAnonymous(anonymous);
         voteTheme.setIsSelectOne(isSelectOne);
-        voteTheme.setCreatTime(DateUtils.getTimestamp().toString());
+        voteTheme.setCreatTime(DateUtils.getNowTime());
         Integer thmemeId = voteService.saveVoteTheme(voteTheme);
 
         List<Object> voteOptionList = (ArrayList<Object>) vote.get("voteOptionList");  //获得list

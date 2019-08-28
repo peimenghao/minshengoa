@@ -8,7 +8,7 @@
     "imageCompressEnable": true, /* 是否压缩图片,默认是true */
     "imageCompressBorder": 1600, /* 图片压缩最长边限制 */
     "imageInsertAlign": "none", /* 插入的图片浮动方式 */
-    "imageUrlPrefix": "http://47.112.143.90:80/", /* 图片访问路径前缀 */
+    "imageUrlPrefix": "http://139.155.1.9:80/", /* 图片访问路径前缀 */
     "localSavePathPrefix": "D:/development/ideaPro/minshengoa/src/main/webapp/upload/images/",/*上传服务器此条用不到*/
     "imagePathFormat": "{yyyy}{mm}{dd}{time}{rand:6}", /* 上传保存路径,可以自定义保存路径和文件名格式 */
                                 /* {filename} 会替换成原文件名,配置这项需要注意中文乱码问题 */
@@ -29,13 +29,13 @@
     "scrawlFieldName": "upfile", /* 提交的图片表单名称 */
     "scrawlPathFormat": "/ueditor/jsp/upload/image/{yyyy}{mm}{dd}/{time}{rand:6}", /* 上传保存路径,可以自定义保存路径和文件名格式 */
     "scrawlMaxSize": 2048000, /* 上传大小限制，单位B */
-    "scrawlUrlPrefix": "http://47.112.143.90:80/", /* 图片访问路径前缀 */
+    "scrawlUrlPrefix": "http://139.155.1.9:80/", /* 图片访问路径前缀 */
     "scrawlInsertAlign": "none",
 
     /* 截图工具上传 */
     "snapscreenActionName": "uploadimage", /* 执行上传截图的action名称 */
     "snapscreenPathFormat": "D:/development/ideaPro/minshengoa/src/main/webapp/upload/images/{yyyy}{mm}{dd}/{time}{rand:6}", /* 上传保存路径,可以自定义保存路径和文件名格式 */
-    "snapscreenUrlPrefix": "http://47.112.143.90:80/", /* 图片访问路径前缀 */
+    "snapscreenUrlPrefix": "http://139.155.1.9:80/", /* 图片访问路径前缀 */
     "snapscreenInsertAlign": "none", /* 插入的图片浮动方式 */
 
     /* 抓取远程图片配置 */
@@ -43,7 +43,7 @@
     "catcherActionName": "catchimage", /* 执行抓取远程图片的action名称 */
     "catcherFieldName": "source", /* 提交的图片列表表单名称 */
     "catcherPathFormat": "/ueditor/jsp/upload/image/{yyyy}{mm}{dd}/{time}{rand:6}", /* 上传保存路径,可以自定义保存路径和文件名格式 */
-    "catcherUrlPrefix": "http://47.112.143.90:80/", /* 图片访问路径前缀 */
+    "catcherUrlPrefix": "http://139.155.1.9:80/", /* 图片访问路径前缀 */
     "catcherMaxSize": 2048000, /* 上传大小限制，单位B */
     "catcherAllowFiles": [".png", ".jpg", ".jpeg", ".gif", ".bmp"], /* 抓取图片格式显示 */
     /*抓取远程图片是否开启,默认true*/
@@ -53,7 +53,7 @@
     "videoActionName": "uploadvideo", /* 执行上传视频的action名称 */
     "videoFieldName": "upfile", /* 提交的视频表单名称 */
     "videoPathFormat": "/ueditor/jsp/upload/video/{yyyy}{mm}{dd}/{time}{rand:6}", /* 上传保存路径,可以自定义保存路径和文件名格式 */
-    "videoUrlPrefix": "http://47.112.143.90:80/", /* 视频访问路径前缀 */
+    "videoUrlPrefix": "http://139.155.1.9:80/", /* 视频访问路径前缀 */
     "videoMaxSize": 102400000, /* 上传大小限制，单位B，默认100MB */
     "videoAllowFiles": [
         ".flv", ".swf", ".mkv", ".avi", ".rm", ".rmvb", ".mpeg", ".mpg",
@@ -63,7 +63,7 @@
     "fileActionName": "uploadfile", /* controller里,执行上传视频的action名称 */
     "fileFieldName": "upfile", /* 提交的文件表单名称 */
     "filePathFormat": "{yyyy}{mm}{dd}/{time}{rand:6}", /* 上传保存路径,可以自定义保存路径和文件名格式 */
-    "fileUrlPrefix": "http://47.112.143.90:80/", /* 文件访问路径前缀 */
+    "fileUrlPrefix": "http://139.155.1.9:80/", /* 文件访问路径前缀 */
     "filelocalPrefix": "",
     "fileMaxSize": 51200000, /* 上传大小限制，单位B，默认50MB */
     "fileAllowFiles": [

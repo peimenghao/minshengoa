@@ -12,4 +12,6 @@ public interface RoleDao extends JpaRepository<Role, Integer> {
     //查询所有角色
        @Query(value="select r.* from t_role r", nativeQuery = true)
         List<Role> findRole();     //查询所有role
+
+     Role  findByRoleId(Integer roleId);
 }

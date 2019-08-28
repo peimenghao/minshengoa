@@ -22,11 +22,5 @@ public class Headpic {
 
     private String picPath;      //  fastID --例：group1/M00/00/00/wKhuwV0avOKAXrp6AAAB7SFsc3Q552.txt
 
-    //@OneToOne(mappedBy = "headpic")
-   // private Integer userId;
-
-  //  private Integer isPublic = 0;  //是否是公共文件，0是私有文件，1是公共文件
-
-   // private String fileSize;       //文件大小
 
 }
