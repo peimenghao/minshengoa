@@ -5,7 +5,7 @@ spring:
       driver-class-name: com.mysql.jdbc.Driver
       url: jdbc:mysql://139.155.1.9:3306/myoa?characterEncoding=utf-8
       username: root
-      password: root
+      password: pmhPMH123456
       # Druid连接池配置
       type: com.alibaba.druid.pool.DruidDataSource
       # 初始化
@@ -34,9 +34,14 @@ spring:
         event:
          merge:
            entity_copy_observer: allow
-#             显示sql 查询     entity_copy_observer   多级  级联保存必须加这个
+            # 显示sql 查询     entity_copy_observer   多级  级联保存必须加这个
       show-sql: true
       open-in-view: true
+#   jpa:
+#      hibernate:
+#         ddl-auto: update
+#      show-sql: true
+#      open-in-view: true
    http:
       encoding:
          charset: UTF-8
@@ -124,7 +129,7 @@ fdfs:
 
 
 
-
+#前端文章需要修改的目录 ：
 
 
 

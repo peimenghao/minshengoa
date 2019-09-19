@@ -9,7 +9,9 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.ws.rs.FormParam;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -63,7 +65,6 @@ public class RichText {  //富文本内容存储
     private Integer wordNum;
 
 
-
     @FormParam(value = "noComment") //是否禁止评论 ture  允许评论
     private String noComment;
 
@@ -81,8 +82,8 @@ public class RichText {  //富文本内容存储
     private Set<VisitNum> visitNumSet = new HashSet<VisitNum>();
 
     //单向一对多
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)   //评论表
-    private Set<Comment> commentlist = new HashSet<Comment>();
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER)   //评论表
+    private List<Comment> commentlist = new ArrayList<Comment>();
 
     //可选属性optional=false,表示user不能为空
     //  cascade表示当前表拥有的权限 ，例： CascadeType.ALL  删除的话会级联删除当前用户所有文章

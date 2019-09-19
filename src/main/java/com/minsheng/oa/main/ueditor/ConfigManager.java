@@ -153,8 +153,6 @@ public final class ConfigManager {
 		File file = null;
 		String resource = "/config.json";
 		URL res =this.getClass().getResource(resource);
-		System.out.println("res"+res);
-		System.out.println("res.getProtocol()"+res.getProtocol());
 		if (res.getProtocol().equals("jar")) {
 			try {
 				InputStream input = this.getClass().getResourceAsStream(resource);
@@ -168,7 +166,6 @@ public final class ConfigManager {
 				}
 				out.close();
 			} catch (IOException ex) {
-				System.out.println("--报错");
 			}
 		} else {
 			//this will probably work in your IDE, but not from a JAR

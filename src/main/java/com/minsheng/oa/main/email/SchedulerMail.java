@@ -56,8 +56,6 @@ public class SchedulerMail {                //quartz初始化
             System.out.println(mattteId);
 
             //创建调度器
-            System.out.println("第一次datetime 转化" + dateMap.get("date" + i));
-
             String cronTime = DateUtils.stringtoCron(dateMap.get("date" + i));  //转换触发时间 字符串转cron
             //触发器
             Trigger trigger = TriggerBuilder.newTrigger()

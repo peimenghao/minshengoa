@@ -20,7 +20,7 @@ public class MatterController {
     ResultMap resultMap;
 
 
-    @Path("/getMatter")//获得所有此用户的待办事项
+    @Path("/getMatter")  //获得所有此用户的待办事项
     @GET
     @Produces("application/json")
     public Map<String, Object> getMatter(@QueryParam("userId") Integer userId) {

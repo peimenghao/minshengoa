@@ -25,12 +25,6 @@ public class Comment {
     @FormParam(value = "commentId")
     private Integer commentId;
 
-    @FormParam(value = "realName")          //评论用户名
-    private String realName;
-
-    @FormParam(value = "userIdNum")          //评论用id
-    private Integer userIdNum;
-
     @FormParam(value = "content")     //评论内容
     private String content;
 

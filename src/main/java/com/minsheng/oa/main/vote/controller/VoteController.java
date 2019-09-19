@@ -39,7 +39,6 @@ public class VoteController {
             List<User> userlist = option.getUserList();   //查询用户集合
             for (User user : userlist) {                     //遍历用户集合
                 if (user.getUserId() == userId) {            //获取用户id  判断是否相同，相同即是重复，返回错误操作
-                    System.out.println("重复投票");
 
                     voteTheme.setIsClose(1);
                 }
@@ -142,7 +141,6 @@ public class VoteController {
             List<User> userlist = option.getUserList();   //查询用户集合
             for (User user : userlist) {                     //遍历用户集合
                 if (user.getUserId() == userId) {            //获取用户id  判断是否相同，相同即是重复，返回错误操作
-                    System.out.println("重複投票");
                     return resultMap.resutError("repeatVoting");
 
                 }

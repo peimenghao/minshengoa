@@ -237,7 +237,6 @@ public class FastDFSClientUtils {
             out.close();
             return file;
         } catch (IOException ex) {
-            System.out.println("--报错");
         }
     } else {
         //this will probably work in your IDE, but not from a JAR

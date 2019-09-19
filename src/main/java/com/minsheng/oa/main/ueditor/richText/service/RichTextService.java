@@ -22,20 +22,26 @@ public class RichTextService {
 
 
     public RichText findByTextId(Integer textId) {   //查询单个文本
-        return richTextDao.findByTextIdOrderByTextIdAsc(textId);
+        return richTextDao.findByTextId(textId);
     }
 
+   public void updateText(String  title,String content,String updateTime,
+                    Integer publishType,String tag
+            ,Integer articleType,Integer wordNum,String noComment,Integer textId){
+       richTextDao.updateText(title,content,updateTime,publishType,
+               tag,articleType,wordNum,noComment,textId);
+   }
     public List<RichText> findByUserId(Integer userId) {  //查询用户下的所有文章
 
-        return richTextDao.findByUserIdNum(userId);
+        return richTextDao.findByUserIdNumOrderByTextIdDesc(userId);
     }
 
     public List<RichText> findByUserIdAndPublishType(Integer userId,Integer publishType){  //发布方式查询文章
-        return richTextDao.findByUserIdNumAndPublishType(userId,publishType);
+        return richTextDao.findByUserIdNumAndPublishTypeOrderByTextIdDesc(userId,publishType);
     }
 
-    public List<RichText> findByPublishType(Integer publishType){  //发布方式查询文章
-        return richTextDao.findByPublishType(publishType); //查询所有广场文章
+    public List<RichText> findPublicArticle(){  //查询所有广场文章
+        return richTextDao.findPublicArticle();
     }
 
     public  void deleteByTextId(Integer textId){
